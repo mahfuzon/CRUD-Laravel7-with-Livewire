@@ -7,10 +7,10 @@ use App\Customer;
 
 class CustomerIndex extends Component
 {
-    public $customer;
+    public $customers;
     public function render()
     {
-        $this->customer = Customer::all();
+        $this->customers = Customer::all();
         return view('livewire.customer-index');
     }
 }
