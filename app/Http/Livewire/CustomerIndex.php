@@ -9,7 +9,6 @@ class CustomerIndex extends Component
 {
     public $customers, $name, $phone, $address;
     public function render()
-    
     {
         $this->customers = Customer::orderBy('created_at', 'DESC')->get();
         return view('livewire.customer-index');
