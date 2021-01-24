@@ -1,6 +1,6 @@
 <div>
   <button type="button" class="btn btn-success text-bold" data-toggle="modal" data-target="#TambahData">
-    Tambah Data
+    Insert Data
   </button>
   <hr>
   <div wire:ignore.self class="modal fade" id="TambahData" tabindex="-1" role="dialog" aria-labelledby="TambahDataLabel"
