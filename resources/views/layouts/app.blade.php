@@ -78,5 +78,10 @@
         </main>
     </div>
     @livewireScripts
+    <script>
+        window.livewire.on('customerAdded', ()=>{
+            $('#TambahData').modal('hide')
+        });
+    </script>
 </body>
 </html>
