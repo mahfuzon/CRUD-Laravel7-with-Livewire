@@ -21,7 +21,6 @@ class CustomerIndex extends Component
     }
 
     public function store(){
-        
         $validatedData= $this->validate([
             'name' => 'required|string',
             'phone' => 'required|integer|unique:customers',
