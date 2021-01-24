@@ -29,6 +29,7 @@ class CustomerCreate extends Component
         $data = $this->validate();
         Customer::create($data);
         $this->emit('refreshTable');
+        $this->dispatchBrowserEvent('closeModal');
         $this->clearForm();
     }
 

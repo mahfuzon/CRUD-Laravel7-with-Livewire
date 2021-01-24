@@ -23,6 +23,10 @@ class CustomerIndex extends Component
     }
 
     public function refreshTable(){
-        $this->prompt = 'Ini adalah Modal';
+        
+    }
+
+    public function delete($item_id){
+        Customer::destroy($item_id);
     }
 }
