@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Customer;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CustomerCreate extends Component
 {
@@ -12,30 +14,35 @@ class CustomerCreate extends Component
     protected $listeners = [
         'getModelId'
     ];
-
+        
     public function render()
     {
         return view('livewire.customer-create');
     }
-
-    protected $rules = [
-        'name' => 'required|string',
-        'phone' => 'required|digits:12|unique:customers',
-        'address' => 'required|string',
-    ];
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
+    
 
     public function post(){
-        $data = $this->validate();
+        $data = [
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'address' => $this->address,
+        ];
 
         if($this->modelId){
-            Customer::find($this->modelId)->update($data);
+            $datVal =  Validator::make($data, [
+                'name' => 'required|string',
+                'phone' => 'required|digits:12', 
+                Rule::unique('customers')->ignore($this->modelId),
+                'address' => 'required|string',
+            ])->validate();
+            Customer::find($this->modelId)->update($datVal);
         }else{
-            Customer::create($data);
+            $datVal =  Validator::make($data, [
+                'name' => 'required|string',
+                'phone' => 'required|digits:12|unique:customers', 
+                'address' => 'required|string',
+            ])->validate();
+            Customer::create($datVal);
         }
         $this->emit('refreshTable');
         $this->dispatchBrowserEvent('closeModal');

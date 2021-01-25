@@ -41,23 +41,4 @@ class CustomerIndex extends Component
         Customer::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModal');
     }
-
-    private function resetForm(){
-        $this->name = null;
-        $this->phone = null;
-        $this->address = null;
-    }
-
-    public function store(){
-        
-        $validatedData= $this->validate([
-            'name' => 'required|string',
-            'phone' => 'required|integer|unique:customers',
-            'address' => 'required|string'
-        ]);
-        Customer::create($validatedData);
-        session()->flash('message', 'Data created successfully!!');
-        $this->resetForm();
-        $this->emit('customerAdded');
-    }
 }
