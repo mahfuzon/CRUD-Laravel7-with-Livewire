@@ -7,7 +7,11 @@ use App\Customer;
 
 class CustomerCreate extends Component
 {
-    public $name, $phone, $address;
+    public $name, $phone, $address, $modelId;
+
+    protected $listeners = [
+        'getModelId'
+    ];
 
     public function render()
     {
@@ -27,15 +31,30 @@ class CustomerCreate extends Component
 
     public function post(){
         $data = $this->validate();
-        Customer::create($data);
+
+        if($this->modelId){
+            Customer::find($this->modelId)->update($data);
+        }else{
+            Customer::create($data);
+        }
         $this->emit('refreshTable');
         $this->dispatchBrowserEvent('closeModal');
         $this->clearForm();
     }
 
     private function clearForm(){
+        $this->modelId = null;
         $this->name = null;
         $this->phone = null;
         $this->address = null;
+    }
+
+
+    public function getModelId($modelIdc){
+        $this->modelId = $modelIdc;
+        $model = Customer::find($this->modelId);
+        $this->name = $model->name;
+        $this->phone = $model->phone;
+        $this->address = $model->address;
     }
 }

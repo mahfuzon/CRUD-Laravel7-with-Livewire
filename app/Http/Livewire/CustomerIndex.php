@@ -8,9 +8,20 @@ use App\Customer;
 
 class CustomerIndex extends Component
 {
-    public $prompt;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    public $action;
+    public $selectedItem;
+
+    public function selectItem($itemId, $action){
+        $this->selectedItem = $itemId;
+        if($action=='delete'){
+            $this->dispatchBrowserEvent('openDeleteModal');
+        }else{
+            $this->emit('getModelId', $this->selectedItem);
+            $this->dispatchBrowserEvent('openModal');
+        }
+    }
     protected $listeners = [
         'refreshTable'
     ];
@@ -26,7 +37,8 @@ class CustomerIndex extends Component
         
     }
 
-    public function delete($item_id){
-        Customer::destroy($item_id);
+    public function delete(){
+        Customer::destroy($this->selectedItem);
+        $this->dispatchBrowserEvent('closeDeleteModal');
     }
 }

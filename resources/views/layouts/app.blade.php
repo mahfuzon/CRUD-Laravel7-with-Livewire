@@ -82,7 +82,19 @@
     <script>
         window.addEventListener('closeModal', event => {
             $('#InsertData').modal('hide');
-        })
+        });
+
+        window.addEventListener('openModal', event => {
+            $('#InsertData').modal('show');
+        });
+
+        window.addEventListener('openDeleteModal', event => {
+            $('#DeleteData').modal('show');
+        });
+
+        window.addEventListener('closeDeleteModal', event => {
+            $('#DeleteData').modal('hide');
+        });
     </script>
 </body>
 </html>

@@ -20,7 +20,28 @@
     </div>
   </div>
   <br>
-  <p>{{$prompt}}</p>
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteData" tabindex="-1" aria-labelledby="DeleteDataLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DeleteDataLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>Do you wish to continue?</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button wire:click="delete" type="button" class="btn btn-primary">yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   @if($customer->count())
   <div>
     <table class="table table-striped">
@@ -40,7 +61,11 @@
           <td>{{$item->name}}</td>
           <td>{{$item->phone}}</td>
           <td>{{$item->address}}</td>
-          <td><button class="btn btn-danger" wire:click="delete({{$item->id}})">
+          <td>
+            <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">
+              Edit
+            </button>
+            <button class="btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')">
               Delete
             </button>
           </td>
