@@ -77,10 +77,23 @@
             @yield('content')
         </main>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     @livewireScripts
     <script>
-        window.livewire.on('customerAdded', ()=>{
-            $('#TambahData').modal('hide')
+        window.addEventListener('closeModal', event => {
+            $('#InsertData').modal('hide');
+        });
+
+        window.addEventListener('openModal', event => {
+            $('#InsertData').modal('show');
+        });
+
+        window.addEventListener('openDeleteModal', event => {
+            $('#DeleteData').modal('show');
+        });
+
+        window.addEventListener('closeDeleteModal', event => {
+            $('#DeleteData').modal('hide');
         });
     </script>
 </body>

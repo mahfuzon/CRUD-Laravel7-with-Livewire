@@ -1,80 +1,79 @@
 <div>
-  <button type="button" class="btn btn-success text-bold" data-toggle="modal" data-target="#TambahData">
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertData">
     Insert Data
   </button>
-  <hr>
-  <div wire:ignore.self class="modal fade" id="TambahData" tabindex="-1" role="dialog" aria-labelledby="TambahDataLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+
+  <!-- Modal -->
+  <div class="modal fade" id="InsertData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="InsertDataLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="TambahDataLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="InsertDataLabel">Insert Data</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <Form wire:submit.prevent="store">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input wire:model="name" type="text" class="form-control " id="name" placeholder="Enter Name">
-              @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
-            <div class="form-group">
-              <label for="phone">phone</label>
-              <input wire:model="phone" type="number" class="form-control " id="phone" placeholder="Enter phone number">
-              @error('phone')
-                <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
-            <div class="form-group">
-              <label for="address">Address</label>
-              <textarea wire:model="address" class="form-control " id="address" rows="3"></textarea>
-              @error('address')
-                <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
-          </Form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" wire:click="store">save</button>
+          @livewire('customer-create')
         </div>
       </div>
     </div>
   </div>
+  <br>
 
-  @if (session()->has('message'))
-      <div class="alert alert-success">{{session('message')}}</div>
+<!-- Modal -->
+<div class="modal fade" id="DeleteData" tabindex="-1" aria-labelledby="DeleteDataLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DeleteDataLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>Do you wish to continue?</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button wire:click="delete" type="button" class="btn btn-primary">yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  @if($customer->count())
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <th>No</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <?php $no = 0 ?>
+        @foreach ($customer as $item)
+        <?php $no++ ?>
+        <tr>
+          <td>{{$no}}</td>
+          <td>{{$item->name}}</td>
+          <td>{{$item->phone}}</td>
+          <td>{{$item->address}}</td>
+          <td>
+            <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">
+              Edit
+            </button>
+            <button class="btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')">
+              Delete
+            </button>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+  {{$customer->links()}}
   @endif
-
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Address</th>
-        <th scope="col" width="150"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php $no=0; ?>
-      @foreach ($customers as $item)
-      <?php $no++ ?>
-      <tr>
-        <th scope="row">{{$no}}</th>
-        <td>{{$item->name}}</td>
-        <td>{{$item->phone}}</td>
-        <td>{{$item->address}}</td>
-        <td>
-          <button class="btn btn-sm btn-info text-white">Edit</button>
-          <button class="btn btn-sm btn-danger text-white">Edit</button>
-        </td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
 </div>
