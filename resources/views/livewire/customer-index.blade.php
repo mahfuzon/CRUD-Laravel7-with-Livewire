@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="InsertDataLabel">Insert Data</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span></button>
+          <button wire:click = 'clearForm' type="button" class="close" data-bs-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
           @livewire('customer-create')
@@ -41,6 +41,16 @@
     </div>
   </div>
 </div>
+
+<span> <div class="py-3">
+  <select wire:model="index" class="custom-select col-1">
+    <option>5</option>
+    <option>10</option>
+    <option>20</option>
+  </select>
+  <input wire:model="keyword" class="form-control col-5" style="float:right" type="text" placeholder="Search">
+</div>
+</span>
 
   @if($customer->count())
   <div>

@@ -12,6 +12,8 @@ class CustomerIndex extends Component
     protected $paginationTheme = 'bootstrap';
     public $action;
     public $selectedItem;
+    public $index = 5;
+    public $keyword;
 
     public function selectItem($itemId, $action){
         $this->selectedItem = $itemId;
@@ -22,23 +24,27 @@ class CustomerIndex extends Component
             $this->dispatchBrowserEvent('openModal');
         }
     }
-    protected $listeners = [
-        'refreshTable'
-    ];
+
+    protected $listeners = ['refreshTable'];
 
     public function render()
     {
         return view('livewire.customer-index', [
-            'customer' => Customer::orderBy('created_at', 'DESC')->paginate(10)
+            'customer' =>$this->keyword === null?  Customer::orderBy('created_at', 'DESC')->paginate($this->index):
+            Customer::latest()->where('name','like',"%".$this->keyword."%")
+            ->orWhere('phone','like',"%".$this->keyword."%")->orWhere('address','like',"%".$this->keyword."%")
+            ->paginate($this->index)
         ]);
     }
 
-    public function refreshTable(){
-        
+    public function clearForm(){
+        $this->emit('clearForm');
     }
 
     public function delete(){
         Customer::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModal');
     }
+
+    public function refreshTable(){}
 }

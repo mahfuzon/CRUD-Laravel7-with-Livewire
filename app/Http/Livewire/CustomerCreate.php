@@ -12,7 +12,7 @@ class CustomerCreate extends Component
     public $name, $phone, $address, $modelId;
 
     protected $listeners = [
-        'getModelId'
+        'getModelId', 'clearForm'
     ];
         
     public function render()
@@ -39,7 +39,7 @@ class CustomerCreate extends Component
         }else{
             $datVal =  Validator::make($data, [
                 'name' => 'required|string',
-                'phone' => 'required|digits:12|unique:customers', 
+                'phone' => 'required|digits:12|unique:customers|numeric', 
                 'address' => 'required|string',
             ])->validate();
             Customer::create($datVal);
@@ -50,7 +50,7 @@ class CustomerCreate extends Component
         $this->clearForm();
     }
 
-    private function clearForm(){
+    public function clearForm(){
         $this->modelId = null;
         $this->name = null;
         $this->phone = null;
