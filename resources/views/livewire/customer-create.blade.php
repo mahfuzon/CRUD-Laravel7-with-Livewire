@@ -7,7 +7,7 @@
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">Phone</label>
-      <input type="number" class="form-control" id="phone" wire:model="phone">
+      <input type="text" class="form-control" id="phone" wire:model="phone">
       @error('phone') <p class="error" style="color: red">{{ $message }}</p> @enderror
     </div>
     <div class="mb-3">

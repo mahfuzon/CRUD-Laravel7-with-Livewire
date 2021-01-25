@@ -45,6 +45,7 @@ class CustomerCreate extends Component
             Customer::create($datVal);
         }
         $this->emit('refreshTable');
+        $this->resetErrorBag();
         $this->dispatchBrowserEvent('closeModal');
         $this->clearForm();
     }
