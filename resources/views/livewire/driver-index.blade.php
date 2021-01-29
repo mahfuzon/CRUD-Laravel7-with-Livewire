@@ -1,19 +1,17 @@
 <div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahDriver">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataDriver">
     Insert Data
   </button>
 
   <!-- Modal -->
-  <div class="modal fade" id="modalTambahDriver" tabindex="-1" role="dialog" aria-labelledby="modalTambahDriverLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" id="InsertDataDriver" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="InsertDataDriverLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalTambahDriverLabel">Tambah Data</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="InsertDataDriverLabel">Insert Data</h5>
+          <button wire:click = 'clearForm' type="button" class="close" data-bs-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
           @livewire('driver-create')
@@ -21,28 +19,69 @@
       </div>
     </div>
   </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Phone</th>
-      </tr>
-    </thead>
-    <tbody>
-      @php
-      $i = 0
-      @endphp
-      @foreach ($driver as $item)
-      @php
-      $i++
-      @endphp
-      <tr>
-        <td scop="row">{{$i}}</td>
-        <td>{{$item->name}}</td>
-        <td>{{$item->phone}}</td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
+  <br>
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteDataDriver" tabindex="-1" aria-labelledby="DeleteDataDriverLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DeleteDataDriverLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>Do you wish to continue?</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button wire:click="delete" type="button" class="btn btn-primary">yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<span> <div class="py-3">
+  <select wire:model="index" class="custom-select col-1">
+    <option>5</option>
+    <option>10</option>
+    <option>20</option>
+  </select>
+  <input wire:model="keyword" class="form-control col-5" style="float:right" type="text" placeholder="Search">
+</div>
+</span>
+
+  @if($driver->count())
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <th>No</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <?php $no = 0 ?>
+        @foreach ($driver as $item)
+        <?php $no++ ?>
+        <tr>
+          <td>{{$no}}</td>
+          <td>{{$item->name}}</td>
+          <td>{{$item->phone}}</td>
+          <td>
+            <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">
+              Edit
+            </button>
+            <button class="btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')">
+              Delete
+            </button>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+  {{$driver->links()}}
+  @endif
 </div>

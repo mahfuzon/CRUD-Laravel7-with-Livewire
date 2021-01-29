@@ -46,7 +46,7 @@ class CustomerCreate extends Component
         }
         $this->emit('refreshTable');
         $this->resetErrorBag();
-        $this->dispatchBrowserEvent('closeModal');
+        $this->dispatchBrowserEvent('closeModalCustomer');
         $this->clearForm();
     }
 

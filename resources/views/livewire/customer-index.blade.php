@@ -1,16 +1,16 @@
 <div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertData">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataCustomer">
     Insert Data
   </button>
 
   <!-- Modal -->
-  <div class="modal fade" id="InsertData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="InsertDataLabel" aria-hidden="true">
+  <div class="modal fade" id="InsertDataCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="InsertDataCustomerLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="InsertDataLabel">Insert Data</h5>
+          <h5 class="modal-title" id="InsertDataCustomerLabel">Insert Data</h5>
           <button wire:click = 'clearForm' type="button" class="close" data-bs-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -22,11 +22,11 @@
   <br>
 
 <!-- Modal -->
-<div class="modal fade" id="DeleteData" tabindex="-1" aria-labelledby="DeleteDataLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteDataCustomer" tabindex="-1" aria-labelledby="DeleteDataCustomerLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="DeleteDataLabel">Delete Data</h5>
+        <h5 class="modal-title" id="DeleteDataCustomerLabel">Delete Data</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

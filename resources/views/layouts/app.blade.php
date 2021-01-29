@@ -85,21 +85,38 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     @livewireScripts
     <script>
-        window.addEventListener('closeModal', event => {
-            $('#InsertData').modal('hide');
+        window.addEventListener('closeModalCustomer', event => {
+            $('#InsertDataCustomer').modal('hide');
         });
 
-        window.addEventListener('openModal', event => {
-            $('#InsertData').modal('show');
+        window.addEventListener('openModalCustomer', event => {
+            $('#InsertDataCustomer').modal('show');
         });
 
-        window.addEventListener('openDeleteModal', event => {
-            $('#DeleteData').modal('show');
+        window.addEventListener('openDeleteModalCustomer', event => {
+            $('#DeleteDataCustomer').modal('show');
         });
 
-        window.addEventListener('closeDeleteModal', event => {
-            $('#DeleteData').modal('hide');
+        window.addEventListener('closeDeleteModalCustomer', event => {
+            $('#DeleteDataCustomer').modal('hide');
         });
+
+        window.addEventListener('closeModalDriver', event => {
+            $('#InsertDataDriver').modal('hide');
+        });
+
+        window.addEventListener('openModalDriver', event => {
+            $('#InsertDataDriver').modal('show');
+        });
+
+        window.addEventListener('openDeleteModalDriver', event => {
+            $('#DeleteDataDriver').modal('show');
+        });
+
+        window.addEventListener('closeDeleteModalDriver', event => {
+            $('#DeleteDataDriver').modal('hide');
+        });
+        
     </script>
 </body>
 </html>

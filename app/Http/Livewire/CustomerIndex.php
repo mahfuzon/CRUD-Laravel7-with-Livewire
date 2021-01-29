@@ -15,13 +15,14 @@ class CustomerIndex extends Component
     public $index = 5;
     public $keyword;
 
-    public function selectItem($itemId, $action){
+    public function selectItem($itemId, $action)
+    {
         $this->selectedItem = $itemId;
-        if($action=='delete'){
-            $this->dispatchBrowserEvent('openDeleteModal');
-        }else{
+        if ($action == 'delete') {
+            $this->dispatchBrowserEvent('openDeleteModalCustomer');
+        } else {
             $this->emit('getModelId', $this->selectedItem);
-            $this->dispatchBrowserEvent('openModal');
+            $this->dispatchBrowserEvent('openModalCustomer');
         }
     }
 
@@ -30,21 +31,25 @@ class CustomerIndex extends Component
     public function render()
     {
         return view('livewire.customer-index', [
-            'customer' =>$this->keyword === null?  Customer::orderBy('created_at', 'DESC')->paginate($this->index):
-            Customer::latest()->where('name','like',"%".$this->keyword."%")
-            ->orWhere('phone','like',"%".$this->keyword."%")->orWhere('address','like',"%".$this->keyword."%")
-            ->paginate($this->index)
+            'customer' => $this->keyword === null ?  Customer::orderBy('created_at', 'DESC')->paginate($this->index) :
+                Customer::latest()->where('name', 'like', "%" . $this->keyword . "%")
+                ->orWhere('phone', 'like', "%" . $this->keyword . "%")->orWhere('address', 'like', "%" . $this->keyword . "%")
+                ->paginate($this->index)
         ]);
     }
 
-    public function clearForm(){
+    public function clearForm()
+    {
         $this->emit('clearForm');
     }
 
-    public function delete(){
+    public function delete()
+    {
         Customer::destroy($this->selectedItem);
-        $this->dispatchBrowserEvent('closeDeleteModal');
+        $this->dispatchBrowserEvent('closeDeleteModalCustomer');
     }
 
-    public function refreshTable(){}
+    public function refreshTable()
+    {
+    }
 }
