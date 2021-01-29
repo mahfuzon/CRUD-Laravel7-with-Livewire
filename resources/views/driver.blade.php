@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Driver') }}</div>
                 <div class="card-body">
-                    <!-- @livewire('customer-index') -->
+                    {{-- @livewire('customer-index') --}}
                 </div>
             </div>
         </div>
