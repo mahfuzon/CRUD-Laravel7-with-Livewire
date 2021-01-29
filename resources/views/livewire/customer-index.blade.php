@@ -22,21 +22,19 @@
   <br>
 
 <!-- Modal -->
-<div class="modal fade" id="DeleteDataCustomer" tabindex="-1" aria-labelledby="DeleteDataCustomerLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteDataCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DeleteDataCustomerLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="DeleteDataCustomerLabel">Delete Data</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h3>Do you wish to continue?</h3>
+        <h4>Do you wish to continue?</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button wire:click="delete" type="button" class="btn btn-primary">yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button wire:click='delete' type="button" class="btn btn-primary">Yes</button>
       </div>
     </div>
   </div>
