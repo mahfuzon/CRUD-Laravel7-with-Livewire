@@ -38,7 +38,7 @@
                             <a class="nav-link" href="{{ route('home') }}">{{ __('Customer') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Driver') }}">{{ __('Driver') }}</a>
+                            <a class="nav-link" href="{{ route('driver') }}">{{ __('Driver') }}</a>
                         </li>
                     </ul>
 
