@@ -6,17 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $fillable = [
-        'customer_id', 'driver_id', 'date', 'jlh_kantong',
-        'jlh_ikan', 'price', 'total_ikan', 'total_price', 'bayar'
-    ];
-
-    public function customers()
+    public function customer()
     {
         return $this->belongsTo('App\Customer');
     }
 
-    public function drivers()
+    public function driver()
     {
         return $this->belongsTo('App\Driver');
     }

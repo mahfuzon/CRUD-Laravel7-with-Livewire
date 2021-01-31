@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Driver extends Model
 {
-    protected $fillable = ['name', 'phone'];
-
-    public function transactions()
+    public function transaction()
     {
         return $this->hasMany('App\Transaction');
     }

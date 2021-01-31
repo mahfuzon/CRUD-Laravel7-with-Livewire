@@ -15,16 +15,19 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers');
-            $table->foreignId('driver_id')->constrained('drivers');
             $table->date('date');
+            $table->integer('berat_ikan');
             $table->integer('jlh_kantong');
-            $table->integer('jlh_ikan');
-            $table->integer('price');
-            $table->integer('total_ikan');
-            $table->integer('total_price');
+            $table->integer('harga_ikan');
+            $table->integer('total_berat');
+            $table->integer('total_harga');
             $table->integer('bayar');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->bigInteger('driver_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
         });
     }
 

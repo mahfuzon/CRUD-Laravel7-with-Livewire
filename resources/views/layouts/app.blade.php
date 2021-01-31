@@ -41,6 +41,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('driver') }}">{{ __('Driver') }}</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('transaction') }}">{{ __('Transactions') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
