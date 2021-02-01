@@ -22,6 +22,8 @@
   </div>
   <br>
 
+  
+
   <!-- Modal -->
   <div class="modal fade" id="DeleteDataTransaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="DeleteDataTransactionLabel" aria-hidden="true">

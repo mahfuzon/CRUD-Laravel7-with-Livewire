@@ -121,6 +121,10 @@
         window.addEventListener('closeDeleteModalDriver', event => {
             $('#DeleteDataDriver').modal('hide');
         });
+
+        window.addEventListener('closeModalTransaction', event => {
+            $('#InsertDataTransaction').modal('hide');
+        });
         
     </script>
 </body>
