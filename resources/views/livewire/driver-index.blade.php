@@ -1,20 +1,20 @@
 <div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataCustomer">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataDriver">
     Insert Data
   </button>
 
   <!-- Modal -->
-  <div class="modal fade" id="InsertDataCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="InsertDataCustomerLabel" aria-hidden="true">
+  <div class="modal fade" id="InsertDataDriver" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="InsertDataDriverLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="InsertDataCustomerLabel">Insert Data</h5>
+          <h5 class="modal-title" id="InsertDataDriverLabel">Insert Data</h5>
           <button wire:click = 'clearForm' type="button" class="close" data-bs-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          @livewire('customer-create')
+          @livewire('driver-create')
         </div>
       </div>
     </div>
@@ -22,11 +22,11 @@
   <br>
 
 <!-- Modal -->
-<div class="modal fade" id="DeleteDataCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DeleteDataCustomerLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteDataDriver" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DeleteDataDriverLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="DeleteDataCustomerLabel">Delete Data</h5>
+        <h5 class="modal-title" id="DeleteDataDriverLabel">Delete Data</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -50,25 +50,23 @@
 </div>
 </span>
 
-  @if($customer->count())
+  @if($driver->count())
   <div>
     <table class="table table-striped">
       <thead>
         <th>No</th>
         <th>Name</th>
         <th>Phone</th>
-        <th>Address</th>
         <th>Action</th>
       </thead>
       <tbody>
         <?php $no = 0 ?>
-        @foreach ($customer as $item)
+        @foreach ($driver as $item)
         <?php $no++ ?>
         <tr>
           <td>{{$no}}</td>
           <td>{{$item->name}}</td>
           <td>{{$item->phone}}</td>
-          <td>{{$item->address}}</td>
           <td>
             <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">
               Edit
@@ -82,6 +80,6 @@
       </tbody>
     </table>
   </div>
-  {{$customer->links()}}
+  {{$driver->links()}}
   @endif
 </div>

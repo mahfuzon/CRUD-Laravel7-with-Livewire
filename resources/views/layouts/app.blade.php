@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     @livewireStyles
 </head>
 <body>
@@ -34,7 +35,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('Customer') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('driver') }}">{{ __('Driver') }}</a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('transaction') }}">{{ __('Transactions') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -80,21 +90,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     @livewireScripts
     <script>
-        window.addEventListener('closeModal', event => {
-            $('#InsertData').modal('hide');
+        window.addEventListener('closeModalCustomer', event => {
+            $('#InsertDataCustomer').modal('hide');
         });
 
-        window.addEventListener('openModal', event => {
-            $('#InsertData').modal('show');
+        window.addEventListener('openModalCustomer', event => {
+            $('#InsertDataCustomer').modal('show');
         });
 
-        window.addEventListener('openDeleteModal', event => {
-            $('#DeleteData').modal('show');
+        window.addEventListener('openDeleteModalCustomer', event => {
+            $('#DeleteDataCustomer').modal('show');
         });
 
-        window.addEventListener('closeDeleteModal', event => {
-            $('#DeleteData').modal('hide');
+        window.addEventListener('closeDeleteModalCustomer', event => {
+            $('#DeleteDataCustomer').modal('hide');
         });
+
+        window.addEventListener('closeModalDriver', event => {
+            $('#InsertDataDriver').modal('hide');
+        });
+
+        window.addEventListener('openModalDriver', event => {
+            $('#InsertDataDriver').modal('show');
+        });
+
+        window.addEventListener('openDeleteModalDriver', event => {
+            $('#DeleteDataDriver').modal('show');
+        });
+
+        window.addEventListener('closeDeleteModalDriver', event => {
+            $('#DeleteDataDriver').modal('hide');
+        });
+
+        window.addEventListener('closeModalTransaction', event => {
+            $('#InsertDataTransaction').modal('hide');
+        });
+
+        window.addEventListener('openModalTransaction', event => {
+            $('#InsertDataTransaction').modal('show');
+        });
+
+        window.addEventListener('openDeleteModalTransaction', event => {
+            $('#DeleteDataTransaction').modal('show');
+        });
+
+        window.addEventListener('closeDeleteModalTransaction', event => {
+            $('#DeleteDataTransaction').modal('hide');
+        });
+        
     </script>
 </body>
 </html>

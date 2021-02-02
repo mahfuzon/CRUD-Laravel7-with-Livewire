@@ -4,9 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Customer;
+use App\Driver;
 
-class CustomerIndex extends Component
+class DriverIndex extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -19,10 +19,10 @@ class CustomerIndex extends Component
     {
         $this->selectedItem = $itemId;
         if ($action == 'delete') {
-            $this->dispatchBrowserEvent('openDeleteModalCustomer');
+            $this->dispatchBrowserEvent('openDeleteModalDriver');
         } else {
             $this->emit('getModelId', $this->selectedItem);
-            $this->dispatchBrowserEvent('openModalCustomer');
+            $this->dispatchBrowserEvent('openModalDriver');
         }
     }
 
@@ -30,10 +30,10 @@ class CustomerIndex extends Component
 
     public function render()
     {
-        return view('livewire.customer-index', [
-            'customer' => $this->keyword === null ?  Customer::orderBy('created_at', 'DESC')->paginate($this->index) :
-                Customer::latest()->where('name', 'like', "%" . $this->keyword . "%")
-                ->orWhere('phone', 'like', "%" . $this->keyword . "%")->orWhere('address', 'like', "%" . $this->keyword . "%")
+        return view('livewire.driver-index', [
+            'driver' => $this->keyword === null ?  Driver::orderBy('created_at', 'DESC')->paginate($this->index) :
+                Driver::latest()->where('name', 'like', "%" . $this->keyword . "%")
+                ->orWhere('phone', 'like', "%" . $this->keyword . "%")
                 ->paginate($this->index)
         ]);
     }
@@ -45,8 +45,8 @@ class CustomerIndex extends Component
 
     public function delete()
     {
-        Customer::destroy($this->selectedItem);
-        $this->dispatchBrowserEvent('closeDeleteModalCustomer');
+        Driver::destroy($this->selectedItem);
+        $this->dispatchBrowserEvent('closeDeleteModalDriver');
     }
 
     public function refreshTable()

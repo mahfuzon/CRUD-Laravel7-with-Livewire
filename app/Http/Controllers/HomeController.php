@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\Comment;
+use App\Customer;
+use App\Transaction;
+use Psy\Readline\Transient;
 
 class HomeController extends Controller
 {
@@ -24,5 +29,15 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function driver()
+    {
+        return view('driver');
+    }
+
+    public function transaction()
+    {
+        return view('transaction');
     }
 }
