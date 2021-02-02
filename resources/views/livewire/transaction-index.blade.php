@@ -84,11 +84,11 @@
           <td>{{$item->date}}</td>
           <td>{{$item->customer->name}}</td>
           <td>{{$item->jlh_kantong}}</td>
-          <td>{{$item->berat_ikan}}</td>
-          <td>{{$item->harga_ikan}}</td>
-          <td>{{$item->total_berat}}</td>
+          <td>{{$item->berat_ikan}} Kg</td>
+          <td>@currency($item->harga_ikan)</td>
+          <td>{{$item->total_berat}} Kg</td>
           <td>@currency($item->total_harga)</td>
-          <td>{{$item->bayar}}</td>
+          <td>@currency($item->bayar)</td>
           <td>{{$item->driver->name}}</td>
           <td>
             <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">

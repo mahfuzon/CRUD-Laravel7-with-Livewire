@@ -20,7 +20,7 @@ class transactionIndex extends Component
     {
         $this->selectedItem = $itemId;
         if ($action == 'delete') {
-            $this->dispatchBrowserEvent('openDeleteModaltransaction');
+            $this->dispatchBrowserEvent('openDeleteModalTransaction');
         } else {
             $this->emit('getModelId', $this->selectedItem);
             $this->dispatchBrowserEvent('openModalTransaction');
@@ -46,6 +46,7 @@ class transactionIndex extends Component
     {
         Transaction::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalTransaction');
+        $this->session('delete');
     }
 
     public function refreshTable()

@@ -129,6 +129,14 @@
         window.addEventListener('openModalTransaction', event => {
             $('#InsertDataTransaction').modal('show');
         });
+
+        window.addEventListener('openDeleteModalTransaction', event => {
+            $('#DeleteDataTransaction').modal('show');
+        });
+
+        window.addEventListener('closeDeleteModalTransaction', event => {
+            $('#DeleteDataTransaction').modal('hide');
+        });
         
     </script>
 </body>
