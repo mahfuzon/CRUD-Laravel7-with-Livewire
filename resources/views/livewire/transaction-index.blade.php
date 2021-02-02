@@ -87,7 +87,7 @@
           <td>{{$item->berat_ikan}}</td>
           <td>{{$item->harga_ikan}}</td>
           <td>{{$item->total_berat}}</td>
-          <td>{{$item->total_harga}}</td>
+          <td>@currency($item->total_harga)</td>
           <td>{{$item->bayar}}</td>
           <td>{{$item->driver->name}}</td>
           <td>
