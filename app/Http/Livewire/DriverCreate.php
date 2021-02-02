@@ -53,6 +53,7 @@ class DriverCreate extends Component
         $this->modelId = null;
         $this->name = null;
         $this->phone = null;
+        $this->resetErrorBag();
     }
 
 

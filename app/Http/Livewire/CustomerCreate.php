@@ -55,6 +55,7 @@ class CustomerCreate extends Component
         $this->name = null;
         $this->phone = null;
         $this->address = null;
+        $this->resetErrorBag();
     }
 
 

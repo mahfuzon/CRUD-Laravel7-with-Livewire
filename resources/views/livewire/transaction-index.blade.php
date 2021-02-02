@@ -60,7 +60,7 @@
       {{ session('message') }}
   </div>
   @endif
-  @if($transaction->count())
+
   <div>
     <table class="table table-striped">
       <thead>
@@ -75,6 +75,7 @@
         <th>Bayar</th>
         <th>Driver</th>
       </thead>
+      @if($transaction->count())
       <tbody>
         <?php $no = 0 ?>
         @foreach ($transaction as $item)
@@ -101,8 +102,17 @@
         </tr>
         @endforeach
       </tbody>
+      @else
+      <tbody>
+        <tr>
+          <td colspan="10">
+            <h3><center>Data Not Found</center></h3>
+          </td>
+        </tr>
+      </tbody>
+      @endif
     </table>
   </div>
   {{$transaction->links()}}
-  @endif
+
 </div>

@@ -37,6 +37,7 @@ class TransactionCreate extends Component
         $this->harga_ikan = null;
         $this->driver_id = null;
         $this->bayar = null;
+        $this->resetErrorBag();
     }
 
     protected $listeners = [
