@@ -15,6 +15,12 @@ class CustomerIndex extends Component
     public $index = 5;
     public $keyword;
 
+    protected $queryString = ['keyword'];
+    
+    public function mount(){
+        $this->keyword = request()->query('keyword', $this->keyword);
+    }
+
     public function selectItem($itemId, $action)
     {
         $this->selectedItem = $itemId;

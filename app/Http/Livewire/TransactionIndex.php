@@ -15,6 +15,15 @@ class transactionIndex extends Component
     public $index = 5;
     public $keyword;
     public $message;
+    public $from;
+    public $to;
+
+    protected $queryString = ['from', 'to'];
+    
+    public function mount(){
+        $this->from = request()->query('from', $this->from);
+        $this->to = request()->query('to', $this->to);
+    }
 
     public function selectItem($itemId, $action)
     {
@@ -31,8 +40,11 @@ class transactionIndex extends Component
 
     public function render()
     {
+
         return view('livewire.transaction-index', [
-            'transaction' => Transaction::orderBy('created_at', 'DESC')->paginate($this->index)
+            'transaction' =>  $this->from === null && $this->to === null ? Transaction::orderBy('created_at', 'DESC')->paginate($this->index):
+            Transaction::latest()->whereBetween('date', [$this->from, $this->to])
+                ->paginate($this->index)
         ]);
         $this->session($this->message);
     }

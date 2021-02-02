@@ -51,9 +51,23 @@
         <option>10</option>
         <option>20</option>
       </select>
-      <input wire:model="keyword" class="form-control col-5" style="float:right" type="text" placeholder="Search">
     </div>
   </span>
+
+  <div class="row g-4 align-items-center">
+    <div class="col-auto">
+      <label for="from" class="col-form-label">From:</label>
+    </div>
+    <div class="col-auto">
+      <input type="date" id="from" class="form-control" wire:model='from'>
+    </div>
+    <div class="col-auto">
+      <label for="to" class="col-form-label">To:</label>
+    </div>
+    <div class="col-auto">
+      <input type="date" id="to" class="form-control" wire:model='to'>
+    </div>
+  </div>
 
   @if (session()->has('message'))
   <div class="alert alert-success">
@@ -82,7 +96,7 @@
         <?php $no++ ?>
         <tr>
           <td>{{$no}}</td>
-          <td>{{$item->date}}</td>
+          <td>{{$item->date->format('d-M-y')}}</td>
           <td>{{$item->customer->name}}</td>
           <td>{{$item->jlh_kantong}}</td>
           <td>{{$item->berat_ikan}} Kg</td>
