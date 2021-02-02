@@ -55,6 +55,11 @@
     </div>
   </span>
 
+  @if (session()->has('message'))
+  <div class="alert alert-success">
+      {{ session('message') }}
+  </div>
+  @endif
   @if($transaction->count())
   <div>
     <table class="table table-striped">

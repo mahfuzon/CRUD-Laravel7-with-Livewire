@@ -7,11 +7,25 @@ use App\Customer;
 use App\Driver;
 use App\Transaction;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class TransactionCreate extends Component
 {
     public $customer_id, $date, $berat_ikan, $jlh_kantong, $harga_ikan, $driver_id, $bayar, $modelId, $total_berat, $total_harga;
+
+    public function getModelId($modelIdc)
+    {
+        $this->modelId = $modelIdc;
+        $model = Transaction::find($this->modelId);
+        $this->customer_id = $model->customer_id;
+        $this->date = $model->date->format('Y-m-d');
+        $this->berat_ikan = $model->berat_ikan;
+        $this->jlh_kantong = $model->jlh_kantong;
+        $this->harga_ikan = $model->harga_ikan;
+        $this->driver_id = $model->driver_id;
+        $this->bayar = $model->bayar;
+        $this->total_berat = $model->total_berat;
+        $this->total_harga = $model->total_harga;
+    }
 
     public function clearForm()
     {
@@ -47,11 +61,18 @@ class TransactionCreate extends Component
 
         if ($this->modelId) {
             $datVal =  Validator::make($data, [
-                'name' => 'required|string',
-                'phone' => 'required|digits:12',
-                Rule::unique('Drivers')->ignore($this->modelId),
+                'customer_id' => 'required|integer',
+                'date' => 'required|date',
+                'berat_ikan' => 'required|integer',
+                'jlh_kantong' => 'required|integer',
+                'harga_ikan' => 'required|integer',
+                'bayar' => 'required|integer',
+                'total_berat' => 'required|integer',
+                'total_harga' => 'required|integer',
+                'driver_id' => 'required|integer',
             ])->validate();
-            Driver::find($this->modelId)->update($datVal);
+            Transaction::find($this->modelId)->update($datVal);
+            $this->emit('session', 'update');
         } else {
             $datVal =  Validator::make($data, [
                 'customer_id' => 'required|integer',
@@ -65,6 +86,7 @@ class TransactionCreate extends Component
                 'driver_id' => 'required|integer',
             ])->validate();
             Transaction::create($datVal);
+            $this->emit('session', 'create');
         }
         $this->emit('refreshTable');
         $this->resetErrorBag();

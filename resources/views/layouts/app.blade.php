@@ -125,6 +125,10 @@
         window.addEventListener('closeModalTransaction', event => {
             $('#InsertDataTransaction').modal('hide');
         });
+
+        window.addEventListener('openModalTransaction', event => {
+            $('#InsertDataTransaction').modal('show');
+        });
         
     </script>
 </body>

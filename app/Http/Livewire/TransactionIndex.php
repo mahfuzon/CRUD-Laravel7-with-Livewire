@@ -14,6 +14,7 @@ class transactionIndex extends Component
     public $selectedItem;
     public $index = 5;
     public $keyword;
+    public $message;
 
     public function selectItem($itemId, $action)
     {
@@ -22,17 +23,18 @@ class transactionIndex extends Component
             $this->dispatchBrowserEvent('openDeleteModaltransaction');
         } else {
             $this->emit('getModelId', $this->selectedItem);
-            $this->dispatchBrowserEvent('openModaltransaction');
+            $this->dispatchBrowserEvent('openModalTransaction');
         }
     }
 
-    protected $listeners = ['refreshTable'];
+    protected $listeners = ['refreshTable', 'session'];
 
     public function render()
     {
         return view('livewire.transaction-index', [
             'transaction' => Transaction::orderBy('created_at', 'DESC')->paginate($this->index)
         ]);
+        $this->session($this->message);
     }
 
     public function clearForm()
@@ -48,5 +50,16 @@ class transactionIndex extends Component
 
     public function refreshTable()
     {
+    }
+
+    public function session($string)
+    {
+        if ($string === 'update') {
+            session()->flash('message', 'transaction successfully updated.');
+        } else if ($string === 'create') {
+            session()->flash('message', 'transaction successfully created.');
+        } else {
+            session()->flash('message', 'transaction successfully deleted.');
+        }
     }
 }
