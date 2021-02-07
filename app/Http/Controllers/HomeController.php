@@ -41,9 +41,11 @@ class HomeController extends Controller
     }
 
     public function export(Request $request){
-        $data = $request->from === null && $request->to === null ? Transaction::orderBy('created_at', 'DESC')->get():
-                Transaction::latest()->whereBetween('date', [$request->from, $request->to])->get();
-        $pdf = PDF::loadview('pdf', compact('data'))->setPaper('a4', 'landscape');
+        $from = $request->from;
+        $to = $request->to;
+        $data = $from === null && $to === null ? Transaction::orderBy('created_at', 'DESC')->get():
+                Transaction::latest()->whereBetween('date', [$from, $to])->get();
+        $pdf = PDF::loadview('pdf', compact('data', 'from', 'to'))->setPaper('a4', 'landscape');
         return $pdf->download('pdf.pdf');
     }
 }

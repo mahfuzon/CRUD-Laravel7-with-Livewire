@@ -28,7 +28,7 @@
 </head>
 <body>
 <center>
-  <h3>Data Transaksi Bulan</h3>
+  <h3>Laporan Data Transaksi @if($from !== null && $to !== null)Dari {{Carbon\Carbon::parse($from)->format('d F Y')}} Sampai {{Carbon\Carbon::parse($to)->format('d F Y')}} @endif</h3>
 </center>
 <table id="data">
   <tr>
