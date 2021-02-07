@@ -8,7 +8,8 @@ class Transaction extends Model
 {
     protected $fillable = [
         'customer_id', 'date', 'jlh_kantong',
-        'berat_ikan', 'harga_ikan', 'bayar', 'total_berat', 'total_harga', 'driver_id'
+        'berat_ikan', 'harga_ikan', 'bayar', 'total_berat', 'total_harga', 'driver_id',
+        'keterangan', 'hutang',
     ];
 
     protected $dates = ['date'];

@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->text('address');
+            $table->integer('hutang')->nullable();
             $table->timestamps();
         });
     }

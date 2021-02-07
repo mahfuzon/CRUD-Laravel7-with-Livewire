@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class TransactionCreate extends Component
 {
-    public $customer_id, $date, $berat_ikan, $jlh_kantong, $harga_ikan, $driver_id, $bayar, $modelId, $total_berat, $total_harga;
+    public $customer_id, $date, $berat_ikan, $jlh_kantong, $harga_ikan, 
+    $driver_id, $bayar, $modelId, $total_berat, $total_harga, $hutang;
 
     public function getModelId($modelIdc)
     {
@@ -48,6 +49,10 @@ class TransactionCreate extends Component
     {
         $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
         $this->total_harga = $this->total_berat * $this->harga_ikan;
+        $this->hutang = $this->total_harga - $this->bayar;
+        $customer = Customer::find($this->customer_id);
+        $customer->hutang += $this->hutang;
+        $customer->save();
         $data = [
             'customer_id' => $this->customer_id,
             'date' => $this->date,
@@ -56,6 +61,7 @@ class TransactionCreate extends Component
             'harga_ikan' => $this->harga_ikan,
             'driver_id' => $this->driver_id,
             'bayar' => $this->bayar,
+            'hutang' => $customer->hutang,
             'total_berat' => $this->total_berat,
             'total_harga' => $this->total_harga,
         ];
@@ -70,6 +76,7 @@ class TransactionCreate extends Component
                 'bayar' => 'required|integer',
                 'total_berat' => 'required|integer',
                 'total_harga' => 'required|integer',
+                'hutang' => 'integer',
                 'driver_id' => 'required|integer',
             ])->validate();
             Transaction::find($this->modelId)->update($datVal);
@@ -84,9 +91,11 @@ class TransactionCreate extends Component
                 'bayar' => 'required|integer',
                 'total_berat' => 'required|integer',
                 'total_harga' => 'required|integer',
+                'hutang' => 'integer',
                 'driver_id' => 'required|integer',
             ])->validate();
             Transaction::create($datVal);
+
             $this->emit('session', 'create');
         }
         $this->emit('refreshTable');
