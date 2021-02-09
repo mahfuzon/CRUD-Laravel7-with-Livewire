@@ -14,6 +14,7 @@ class CustomerIndex extends Component
     public $selectedItem;
     public $index = 5;
     public $keyword;
+    public $message;
 
     protected $queryString = ['keyword'];
     
@@ -32,7 +33,7 @@ class CustomerIndex extends Component
         }
     }
 
-    protected $listeners = ['refreshTable'];
+    protected $listeners = ['refreshTable', 'session'];
 
     public function render()
     {
@@ -53,9 +54,21 @@ class CustomerIndex extends Component
     {
         Customer::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalCustomer');
+        $this->session('delete');
     }
 
     public function refreshTable()
     {
+    }
+
+    public function session($string)
+    {
+        if ($string === 'update') {
+            session()->flash('message', 'customer successfully updated.');
+        } else if ($string === 'create') {
+            session()->flash('message', 'customer successfully created.');
+        } else {
+            session()->flash('message', 'customer successfully deleted.');
+        }
     }
 }

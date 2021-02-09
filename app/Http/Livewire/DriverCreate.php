@@ -35,12 +35,14 @@ class DriverCreate extends Component
                 Rule::unique('Drivers')->ignore($this->modelId),
             ])->validate();
             Driver::find($this->modelId)->update($datVal);
+            $this->emit('session', 'update');
         } else {
             $datVal =  Validator::make($data, [
                 'name' => 'required|string',
                 'phone' => 'required|digits:12|unique:Drivers|numeric',
             ])->validate();
             Driver::create($datVal);
+            $this->emit('session', 'create');
         }
         $this->emit('refreshTable');
         $this->resetErrorBag();

@@ -36,6 +36,7 @@ class CustomerCreate extends Component
                 'address' => 'required|string',
             ])->validate();
             Customer::find($this->modelId)->update($datVal);
+            $this->emit('session', 'update');
         }else{
             $datVal =  Validator::make($data, [
                 'name' => 'required|string',
@@ -43,6 +44,7 @@ class CustomerCreate extends Component
                 'address' => 'required|string',
             ])->validate();
             Customer::create($datVal);
+            $this->emit('session', 'create');
         }
         $this->emit('refreshTable');
         $this->resetErrorBag();

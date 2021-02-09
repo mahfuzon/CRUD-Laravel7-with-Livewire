@@ -49,7 +49,11 @@
   <input wire:model="keyword" class="form-control col-5" style="float:right" type="text" placeholder="Search">
 </div>
 </span>
-
+@if (session()->has('message'))
+<div class="alert alert-success">
+    {{ session('message') }}
+</div>
+@endif
   @if($customer->count())
   <div>
     <table class="table table-striped">
