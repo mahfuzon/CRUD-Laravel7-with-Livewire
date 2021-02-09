@@ -76,6 +76,7 @@
             <button class="btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')">
               Delete
             </button>
+            <a href="/customer/{{$item->id}}" class="btn btn-warning">Detail</a>
           </td>
         </tr>
         @endforeach

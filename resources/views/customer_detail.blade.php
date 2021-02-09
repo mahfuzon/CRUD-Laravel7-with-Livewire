@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Driver') }}</div>
                 <div class="card-body">
-                    
+                    @livewire('show-customer', ['customer_id' => $id])
                 </div>
             </div>
         </div>
