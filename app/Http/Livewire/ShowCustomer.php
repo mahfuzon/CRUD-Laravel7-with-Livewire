@@ -10,13 +10,13 @@ class ShowCustomer extends Component
 {
     protected $paginationTheme = 'bootstrap';
     use WithPagination;
-    public $customer_id, $to;
-    public $from;
+    public $customer_id, $to, $from;
+    public $index = 5;
 
     public function render()
     {
-        return view('livewire.show-customer', ['customer' => $this->from === null && $this->to === null ? Customer::findOrFail($this->customer_id)->transaction()->latest()->paginate(3):
-        Customer::findOrFail($this->customer_id)->transaction()->latest()->whereBetween('date', [$this->from, $this->to])->paginate(3)
+        return view('livewire.show-customer', ['customer' => $this->from === null && $this->to === null ? Customer::findOrFail($this->customer_id)->transaction()->latest()->paginate($this->index):
+        Customer::findOrFail($this->customer_id)->transaction()->latest()->whereBetween('date', [$this->from, $this->to])->paginate($this->index)
         ]);
     }
 }

@@ -1,7 +1,17 @@
 <div>
+  <span>
+    <div class="py-3">
+      <select wire:model="index" class="custom-select col-1">
+        <option>5</option>
+        <option>10</option>
+        <option>20</option>
+      </select>
+    </div>
+  </span>
   <form action="{{route('export_pdf')}}" method="post">
     @csrf
     <div class="row g-5 align-items-center">
+      <input type="hidden" name="id" value="{{$customer_id}}">
       <div class="col-auto">
         <label for="from" class="col-form-label">From:</label>
       </div>
@@ -31,6 +41,7 @@
         <th>Hutang</th>
       </tr>
     </thead>
+    @if($customer->count())
     <tbody>
       @php
       $i = 1
@@ -38,14 +49,23 @@
       @foreach ($customer as $item)
       <tr>
         <td>{{$i++}}</td>
-        <td>{{$item->date}}</td>
-        <td>{{$item->total_berat}}</td>
-        <td>{{$item->total_harga}}</td>
-        <td>{{$item->bayar}}</td>
-        <td>{{$item->hutang}}</td>
+        <td>{{$item->date->format('d-M-y')}}</td>
+        <td>{{$item->total_berat}} Kg</td>
+        <td>@currency($item->total_harga)</td>
+        <td>@currency($item->bayar)</td>  
+        <td @if ($item->hutang < 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>
       </tr>
       @endforeach
     </tbody>
+    @else
+    <tbody>
+      <tr>
+        <td colspan="10">
+          <h3><center>Data Not Found</center></h3>
+        </td>
+      </tr>
+    </tbody>
+    @endif
   </table>
   {{ $customer->links() }}
 </div>
