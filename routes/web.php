@@ -23,3 +23,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/driver', 'HomeController@driver')->name('driver');
 Route::get('/transaction', 'HomeController@transaction')->name('transaction');
 Route::post('/export', 'HomeController@export')->name('export');
+Route::get('/customer/{id}', 'HomeController@show');;
+

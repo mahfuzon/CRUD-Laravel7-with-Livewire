@@ -48,4 +48,8 @@ class HomeController extends Controller
         $pdf = PDF::loadview('pdf', compact('data', 'from', 'to'))->setPaper('a4', 'landscape');
         return $pdf->download('pdf.pdf');
     }
+
+    public function show($id){
+        return view('customer_detail', compact('id'));
+    }
 }
