@@ -1,8 +1,6 @@
 <div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataDriver">
-    Insert Data
-  </button>
+  <i class="far fa-plus-square btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataDriver"> Insert Data</i>
 
   <!-- Modal -->
   <div class="modal fade" id="InsertDataDriver" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -74,12 +72,8 @@
           <td>{{$item->name}}</td>
           <td>{{$item->phone}}</td>
           <td>
-            <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">
-              Edit
-            </button>
-            <button class="btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')">
-              Delete
-            </button>
+            <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
+            <i class="fas fa-trash-alt btn btn-danger"  wire:click="selectItem({{$item->id}}, 'delete')"></i>
           </td>
         </tr>
         @endforeach

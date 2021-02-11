@@ -1,8 +1,6 @@
 <div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataTransaction">
-    Insert Data
-  </button>
+  <i class="far fa-plus-square btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataTransaction"> Insert Data</i>
 
   <!-- Modal -->
   <div class="modal fade" id="InsertDataTransaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -54,7 +52,7 @@
     </div>
   </span>
 
-  <form action="{{route('export')}}" method="post">
+  <form action="{{route('export')}}" method="post" id="export_all">
     @csrf
     <div class="row g-5 align-items-center">
       <div class="col-auto">
@@ -70,10 +68,15 @@
         <input type="date" id="to" class="form-control" wire:model='to' name="to">
       </div>
       <div class="col-auto">
-        <input type="submit" id="submit" class="form-control btn btn-success" name="submit" value="PDF">
+        <a class="btn btn-success" href="{{ route('export') }}"
+        onclick="event.preventDefault();
+                      document.getElementById('export_all').submit();">
+          <i class="fas fa-file-download mr-2"></i> Generate Report
+        </a>
       </div>
     </div>
   </form>
+
 
   @if (session()->has('message'))
   <div class="alert alert-success">
@@ -112,13 +115,9 @@
           <td>@currency($item->bayar)</td>  
           <td>{{$item->driver->name}}</td>
           <td>
-            <button class="btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')">
-              Edit
-            </button>
-            <button class="btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')">
-              Delete
-            </button>
-            <a href="/customer/{{$item->customer->id}}" class="btn btn-warning">Detail</a>
+            <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
+            <i class="fas fa-trash-alt btn btn-danger"  wire:click="selectItem({{$item->id}}, 'delete')"></i>
+            <a href="/customer/{{$item->customer->id}}" class="btn btn-warning"><i class="fas fa-info-circle"></i></a>
           </td>
         </tr>
         @endforeach
@@ -136,5 +135,4 @@
   </div>
   {{$transaction->links()}}
   <hr>
-
 </div>

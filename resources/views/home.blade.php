@@ -1,16 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.template')
+
+@section('name')
+    <title>Customer</title>    
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">{{ __('Customer') }}</div>
-                <div class="card-body">
-                    @livewire('customer-index')
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    @livewire('customer-index')
+@endsection
+
+@section('script')
+    window.addEventListener('closeModalCustomer', event => {
+        $('#InsertDataCustomer').modal('hide');
+    });
+
+    window.addEventListener('openModalCustomer', event => {
+        $('#InsertDataCustomer').modal('show');
+    });
+
+    window.addEventListener('openDeleteModalCustomer', event => {
+        $('#DeleteDataCustomer').modal('show');
+    });
+
+    window.addEventListener('closeDeleteModalCustomer', event => {
+        $('#DeleteDataCustomer').modal('hide');
+    });    
 @endsection

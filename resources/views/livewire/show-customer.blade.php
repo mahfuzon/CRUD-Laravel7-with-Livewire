@@ -8,7 +8,7 @@
       </select>
     </div>
   </span>
-  <form action="{{route('export_pdf')}}" method="post">
+  <form action="{{route('export_pdf')}}" method="post" id="export_pdf">
     @csrf
     <div class="row g-5 align-items-center">
       <input type="hidden" name="id" value="{{$customer_id}}">
@@ -25,7 +25,11 @@
         <input type="date" id="to" class="form-control" wire:model='to' name="to">
       </div>
       <div class="col-auto">
-        <input type="submit" id="submit" class="form-control btn btn-success" name="submit" value="PDF">
+        <a class="btn btn-success" href="{{ route('export_pdf') }}"
+        onclick="event.preventDefault();
+                      document.getElementById('export_pdf').submit();">
+          <i class="fas fa-file-download mr-2"></i> Generate Report
+        </a>
       </div>
     </div>
   </form>

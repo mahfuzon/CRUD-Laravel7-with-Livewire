@@ -1,16 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.template')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">{{ __('Driver') }}</div>
-                <div class="card-body">
-                    @livewire('driver-index')
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    @livewire('driver-index')
+@endsection
+
+@section('script')
+    window.addEventListener('closeModalDriver', event => {
+        $('#InsertDataDriver').modal('hide');
+    });
+
+    window.addEventListener('openModalDriver', event => {
+        $('#InsertDataDriver').modal('show');
+    });
+
+    window.addEventListener('openDeleteModalDriver', event => {
+        $('#DeleteDataDriver').modal('show');
+    });
+
+    window.addEventListener('closeDeleteModalDriver', event => {
+        $('#DeleteDataDriver').modal('hide');
+    });
 @endsection
