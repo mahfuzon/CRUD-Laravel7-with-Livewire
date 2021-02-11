@@ -14,15 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/driver', 'HomeController@driver')->name('driver');
-Route::get('/transaction', 'HomeController@transaction')->name('transaction');
+Route::get('/customer', 'HomeController@customer')->name('customer');
 Route::post('/export', 'HomeController@export')->name('export');
 Route::post('/export_pdf', 'HomeController@export_pdf')->name('export_pdf');
 Route::get('/customer/{id}', 'HomeController@show');;
-

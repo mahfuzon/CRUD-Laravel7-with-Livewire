@@ -43,7 +43,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('transaction') }}">{{ __('Transactions') }}</a>
+                            <a class="nav-link" href="{{ route('customer') }}">{{ __('Customer') }}</a>
                         </li>
                     </ul>
 
