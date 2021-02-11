@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class TransactionCreate extends Component
 {
-    public $customer_id, $date, $berat_ikan, $jlh_kantong, $harga_ikan, 
-    $driver_id, $bayar, $modelId, $total_berat, $total_harga, $hutang;
+    public $customer_id, $date, $berat_ikan, $jlh_kantong, $harga_ikan,
+        $driver_id, $bayar, $modelId, $total_berat, $total_harga, $hutang;
 
     public function getModelId($modelIdc)
     {
@@ -47,6 +47,12 @@ class TransactionCreate extends Component
 
     public function post()
     {
+        $data2 = [
+            'customer_id' => $this->customer_id,
+        ];
+        Validator::make($data2, [
+            'customer_id' => 'required|integer',
+        ])->validate();
         $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
         $this->total_harga = $this->total_berat * $this->harga_ikan;
         $this->hutang = $this->total_harga - $this->bayar;
