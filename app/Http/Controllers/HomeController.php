@@ -27,17 +27,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('transaction');
+        $halaman = 'transaction';
+        return view('transaction', compact('halaman'));
     }
 
     public function driver()
     {
-        return view('driver');
+        $halaman = 'driver';
+        return view('driver', compact('halaman'));
     }
 
     public function customer()
     {
-        return view('customer');
+        $halaman = 'customer';
+        return view('customer', compact('halaman'));
     }
 
     public function export(Request $request)
@@ -52,7 +55,8 @@ class HomeController extends Controller
 
     public function show($id)
     {
-        return view('customer_detail', compact('id'));
+        $halaman = 'transaction';
+        return view('customer_detail', compact('id', 'halaman'));
     }
 
     public function export_pdf(Request $request)

@@ -19,8 +19,9 @@ class transactionIndex extends Component
     public $to;
 
     protected $queryString = ['from', 'to'];
-    
-    public function mount(){
+
+    public function mount()
+    {
         $this->from = request()->query('from', $this->from);
         $this->to = request()->query('to', $this->to);
     }
@@ -28,22 +29,20 @@ class transactionIndex extends Component
     public function selectItem($itemId, $action)
     {
         $this->selectedItem = $itemId;
-        if ($action == 'delete') {
-            $this->dispatchBrowserEvent('openDeleteModalTransaction');
-        } else {
+        if ($action == 'edit') {
             $this->emit('getModelId', $this->selectedItem);
             $this->dispatchBrowserEvent('openModalTransaction');
         }
     }
 
-    protected $listeners = ['refreshTable', 'session'];
+    protected $listeners = ['refreshTable', 'session', 'delete'];
 
     public function render()
     {
 
         return view('livewire.transaction-index', [
-            'transaction' =>  $this->from === null && $this->to === null ? Transaction::orderBy('created_at', 'DESC')->paginate($this->index):
-            Transaction::latest()->whereBetween('date', [$this->from, $this->to])
+            'transaction' =>  $this->from === null && $this->to === null ? Transaction::orderBy('created_at', 'DESC')->paginate($this->index) :
+                Transaction::latest()->whereBetween('date', [$this->from, $this->to])
                 ->paginate($this->index)
         ]);
         $this->session($this->message);
@@ -54,8 +53,9 @@ class transactionIndex extends Component
         $this->emit('clearForm');
     }
 
-    public function delete()
+    public function delete($id)
     {
+        $this->selectedItem = $id;
         Transaction::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalTransaction');
         $this->session('delete');

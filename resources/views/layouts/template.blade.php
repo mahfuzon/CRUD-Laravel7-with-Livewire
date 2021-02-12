@@ -35,7 +35,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-fish"></i>
                 </div>
@@ -46,7 +46,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item @if($halaman === 'transaction') active @endif">
                 <a class="nav-link" href="{{route('home')}}">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Transaction</span></a>
@@ -56,14 +56,14 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            <li class="nav-item @if($halaman === 'customer') active @endif">
                 <a class="nav-link" href="{{route('customer')}}">
                     <i class="fas fa-users"></i>
                     <span>Customer</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item @if($halaman === 'driver') active @endif">
                 <a class="nav-link" href="{{route('driver')}}">
                     <i class="fas fa-truck"></i>
                     <span>Driver</span></a>
@@ -206,6 +206,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @livewireScripts
     <script>
         @yield('script')
