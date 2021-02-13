@@ -29,13 +29,15 @@ class transactionIndex extends Component
     public function selectItem($itemId, $action)
     {
         $this->selectedItem = $itemId;
-        if ($action == 'edit') {
+        if ($action == 'delete') {
+            $this->dispatchBrowserEvent('openDeleteModalTransaction');
+        } else {
             $this->emit('getModelId', $this->selectedItem);
             $this->dispatchBrowserEvent('openModalTransaction');
         }
     }
 
-    protected $listeners = ['refreshTable', 'session', 'delete'];
+    protected $listeners = ['refreshTable', 'session'];
 
     public function render()
     {
@@ -53,9 +55,8 @@ class transactionIndex extends Component
         $this->emit('clearForm');
     }
 
-    public function delete($id)
+    public function delete()
     {
-        $this->selectedItem = $id;
         Transaction::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalTransaction');
         $this->session('delete');

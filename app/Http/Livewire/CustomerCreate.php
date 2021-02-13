@@ -14,33 +14,34 @@ class CustomerCreate extends Component
     protected $listeners = [
         'getModelId', 'clearForm'
     ];
-        
+
     public function render()
     {
         return view('livewire.customer-create');
     }
-    
 
-    public function post(){
+
+    public function post()
+    {
         $data = [
             'name' => $this->name,
             'phone' => $this->phone,
             'address' => $this->address,
         ];
 
-        if($this->modelId){
+        if ($this->modelId) {
             $datVal =  Validator::make($data, [
                 'name' => 'required|string',
-                'phone' => 'required|digits:12', 
+                'phone' => 'required|digits:12',
                 Rule::unique('customers')->ignore($this->modelId),
                 'address' => 'required|string',
             ])->validate();
             Customer::find($this->modelId)->update($datVal);
             $this->emit('session', 'update');
-        }else{
+        } else {
             $datVal =  Validator::make($data, [
                 'name' => 'required|string',
-                'phone' => 'required|digits:12|unique:customers|numeric', 
+                'phone' => 'required|digits:12|unique:customers|numeric',
                 'address' => 'required|string',
             ])->validate();
             Customer::create($datVal);
@@ -52,7 +53,8 @@ class CustomerCreate extends Component
         $this->clearForm();
     }
 
-    public function clearForm(){
+    public function clearForm()
+    {
         $this->modelId = null;
         $this->name = null;
         $this->phone = null;
@@ -61,7 +63,8 @@ class CustomerCreate extends Component
     }
 
 
-    public function getModelId($modelIdc){
+    public function getModelId($modelIdc)
+    {
         $this->modelId = $modelIdc;
         $model = Customer::find($this->modelId);
         $this->name = $model->name;

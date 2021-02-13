@@ -36,6 +36,11 @@
             @error('bayar') <div class="invalid-feedback @error('bayar') is-invalid @enderror">{{ $message }}</div> @enderror
         </div>
         <div class="mb-3">
+            <label for="keterangan" class="form-label">Keterangan</label>
+            <textarea name="keterangan" id="keterangan" cols="10" rows="3"  class="form-control @error('keterangan') is-invalid @enderror" wire:model="keterangan" ></textarea>
+            @error('keterangan') <div class="invalid-feedback @error('keterangan') is-invalid @enderror">{{ $message }}</div> @enderror
+        </div>
+        <div class="mb-3">
             <label for="driver_id" class="form-label">Driver</label>
             <select name="driver_id" id="driver_id" class="form-control @error('driver_id') is-invalid @enderror" wire:model='driver_id'>
                 <option value="">== Select Driver ==</option>

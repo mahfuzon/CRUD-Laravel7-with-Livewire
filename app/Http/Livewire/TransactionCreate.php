@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class TransactionCreate extends Component
 {
     public $customer_id, $date, $berat_ikan, $jlh_kantong, $harga_ikan,
-        $driver_id, $bayar, $modelId, $total_berat, $total_harga, $hutang;
+        $driver_id, $bayar, $modelId, $total_berat, $total_harga, $hutang, $keterangan;
 
     public function getModelId($modelIdc)
     {
@@ -24,6 +24,7 @@ class TransactionCreate extends Component
         $this->harga_ikan = $model->harga_ikan;
         $this->driver_id = $model->driver_id;
         $this->bayar = $model->bayar;
+        $this->keterangan = $model->keterangan;
         $this->total_berat = $model->total_berat;
         $this->total_harga = $model->total_harga;
     }
@@ -37,6 +38,7 @@ class TransactionCreate extends Component
         $this->jlh_kantong = null;
         $this->harga_ikan = null;
         $this->driver_id = null;
+        $this->keterangan = null;
         $this->bayar = null;
         $this->resetErrorBag();
     }
@@ -68,6 +70,7 @@ class TransactionCreate extends Component
             'driver_id' => $this->driver_id,
             'bayar' => $this->bayar,
             'hutang' => $customer->hutang,
+            'keterangan' => $this->keterangan,
             'total_berat' => $this->total_berat,
             'total_harga' => $this->total_harga,
         ];
@@ -80,6 +83,7 @@ class TransactionCreate extends Component
                 'jlh_kantong' => 'required|integer',
                 'harga_ikan' => 'required|integer',
                 'bayar' => 'required|integer',
+                'keterangan' => 'required|string',
                 'total_berat' => 'required|integer',
                 'total_harga' => 'required|integer',
                 'hutang' => 'integer',
@@ -95,6 +99,7 @@ class TransactionCreate extends Component
                 'jlh_kantong' => 'required|integer',
                 'harga_ikan' => 'required|integer',
                 'bayar' => 'required|integer',
+                'keterangan' => 'required|string',
                 'total_berat' => 'required|integer',
                 'total_harga' => 'required|integer',
                 'hutang' => 'integer',
