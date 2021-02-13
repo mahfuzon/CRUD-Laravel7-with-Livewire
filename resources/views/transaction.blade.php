@@ -28,4 +28,8 @@ window.addEventListener('openDeleteModalTransaction', event => {
 window.addEventListener('closeDeleteModalTransaction', event => {
     $('#DeleteDataTransaction').modal('hide');
 });
+
+window.addEventListener('openDetailModal', event => {
+    alert('ok');
+})
 @endsection

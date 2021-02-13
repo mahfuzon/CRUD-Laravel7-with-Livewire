@@ -20,7 +20,7 @@
   </div>
   <br>
 
-  
+  @livewire('detail-modal')
 
   <!-- Modal -->
   <div class="modal fade" id="DeleteDataTransaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -118,7 +118,7 @@
             <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
             <i class="fas fa-trash-alt btn btn-danger"  wire:click="selectItem({{$item->id}}, 'delete')"></i>
             {{-- <a href="/customer/{{$item->customer->id}}" class="btn btn-warning"><i class="fas fa-info-circle"></i></a> --}}
-            <i class="fas fa-trash-alt btn btn-warning"  wire:click="selectItem({{$item->id}}, 'detail')"></i>
+            <i class="fas fa-trash-alt btn btn-warning"  wire:click="$emit('openModalDetail', {{$item->id}})"></i>
           </td>
         </tr>
         @endforeach
