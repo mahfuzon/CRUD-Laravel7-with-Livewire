@@ -117,7 +117,8 @@
           <td>
             <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
             <i class="fas fa-trash-alt btn btn-danger"  wire:click="selectItem({{$item->id}}, 'delete')"></i>
-            <a href="/customer/{{$item->customer->id}}" class="btn btn-warning"><i class="fas fa-info-circle"></i></a>
+            {{-- <a href="/customer/{{$item->customer->id}}" class="btn btn-warning"><i class="fas fa-info-circle"></i></a> --}}
+            <i class="fas fa-trash-alt btn btn-warning"  wire:click="selectItem({{$item->id}}, 'detail')"></i>
           </td>
         </tr>
         @endforeach
