@@ -20,8 +20,6 @@
   </div>
   <br>
 
-  @livewire('detail-modal')
-
   <!-- Modal -->
   <div class="modal fade" id="DeleteDataTransaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="DeleteDataTransactionLabel" aria-hidden="true">
@@ -90,13 +88,11 @@
         <th>No</th>
         <th>Date</th>
         <th>Customer Name</th>
-        <th>Jumlah Kantong</th>
-        <th>Berat Ikan</th>
-        <th>Price</th>
         <th>Berat Total</th>
-        <th>Total Price</th>
+        <th>Total Harga</th>
         <th>Bayar</th>
         <th>Hutang</th>
+        <th>Driver</th>
       </thead>
       @if($transaction->count())
       <tbody>
@@ -107,12 +103,10 @@
           <td>{{$no}}</td>
           <td>{{$item->date->format('d-M-y')}}</td>
           <td>{{$item->customer->name}}</td>
-          <td>{{$item->jlh_kantong}}</td>
-          <td>{{$item->berat_ikan}} Kg</td>
-          <td>@currency($item->harga_ikan)</td>
           <td>{{$item->total_berat}} Kg</td>
           <td>@currency($item->total_harga)</td>
-          <td>@currency($item->bayar)</td>  
+          <td>@currency($item->bayar)</td>
+          <td @if ($item->hutang < 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>  
           <td>{{$item->driver->name}}</td>
           <td>
             <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
@@ -136,4 +130,22 @@
   </div>
   {{$transaction->links()}}
   <hr>
+
+  <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body modal-lg">
+          @livewire('detail-modal')
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

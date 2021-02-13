@@ -1,20 +1,68 @@
 <div>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Tanggal transaksi</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$date}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Nama Customer</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$customer}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Berat ikan</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$berat_ikan}} Kg</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Jumlah Kantong</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$jlh_kantong}} Kantong</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Harga ikan</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: @currency($harga_ikan)</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Total berat</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$total_berat}} Kg</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Total harga</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: @currency($total_harga)</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Bayar</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: @currency($bayar)</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Keterangan</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$keterangan}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Hutang</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: @currency($hutang)</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-sm-4 col-form-label">Driver</label>
+    <div class="col-sm-8">
+      <p class="form-control-plaintext">: {{$driver}}</p>
     </div>
   </div>
 </div>

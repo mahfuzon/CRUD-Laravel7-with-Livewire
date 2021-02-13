@@ -30,6 +30,6 @@ window.addEventListener('closeDeleteModalTransaction', event => {
 });
 
 window.addEventListener('openDetailModal', event => {
-    alert('ok');
+    $('#detailModal').modal('show');
 })
 @endsection
