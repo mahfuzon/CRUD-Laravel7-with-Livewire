@@ -57,7 +57,7 @@
         <td>{{$item->total_berat}} Kg</td>
         <td>@currency($item->total_harga)</td>
         <td>@currency($item->bayar)</td>  
-        <td @if ($item->hutang < 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>
+        <td @if ($item->hutang <= 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>
       </tr>
       @endforeach
     </tbody>

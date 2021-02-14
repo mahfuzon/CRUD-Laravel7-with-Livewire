@@ -102,17 +102,16 @@
         <tr>
           <td>{{$no}}</td>
           <td>{{$item->date->format('d-M-y')}}</td>
-          <td>{{$item->customer->name}}</td>
+          <td><a href="/customer/{{$item->customer->id}}">{{$item->customer->name}}</a></td>
           <td>{{$item->total_berat}} Kg</td>
           <td>@currency($item->total_harga)</td>
           <td>@currency($item->bayar)</td>
-          <td @if ($item->hutang < 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>  
+          <td @if ($item->hutang <= 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>  
           <td>{{$item->driver->name}}</td>
           <td>
             <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
             <i class="fas fa-trash-alt btn btn-danger"  wire:click="selectItem({{$item->id}}, 'delete')"></i>
-            {{-- <a href="/customer/{{$item->customer->id}}" class="btn btn-warning"><i class="fas fa-info-circle"></i></a> --}}
-            <i class="fas fa-trash-alt btn btn-warning"  wire:click="$emit('openModalDetail', {{$item->id}})"></i>
+            <a wire:click="$emit('openModalDetail', {{$item->id}})" href="#" class="btn btn-warning"><i class="fas fa-info-circle"></i></a>
           </td>
         </tr>
         @endforeach

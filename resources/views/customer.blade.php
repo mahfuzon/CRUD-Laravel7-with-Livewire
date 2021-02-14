@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('name')
+@section('title')
     <title>Customer</title>    
 @endsection
 

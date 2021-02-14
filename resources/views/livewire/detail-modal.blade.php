@@ -56,7 +56,7 @@
   <div class="row">
     <label class="col-sm-4 col-form-label">Hutang</label>
     <div class="col-sm-8">
-      <p class="form-control-plaintext">: @currency($hutang)</p>
+      <p class="form-control-plaintext" @if ($hutang < 0) style="color:green"@else style="color: red"  @endif>: @currency(abs($hutang))</p>
     </div>
   </div>
   <div class="row">

@@ -4,7 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\transaction;
+use App\Transaction;
+use App\Customer;
 
 class transactionIndex extends Component
 {
@@ -57,6 +58,11 @@ class transactionIndex extends Component
 
     public function delete()
     {
+        $id_customer = Transaction::find($this->selectedItem)->customer_id;
+        $hutang_transaksi = Transaction::find($this->selectedItem)->total_harga;
+        $customer = Customer::find($id_customer);
+        $customer->hutang -= $hutang_transaksi;
+        $customer->save();
         Transaction::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalTransaction');
         $this->session('delete');

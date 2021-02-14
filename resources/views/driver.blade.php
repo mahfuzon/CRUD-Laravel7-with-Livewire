@@ -4,6 +4,10 @@
     @livewire('driver-index')
 @endsection
 
+@section('title')
+    <title>Driver</title>
+@endsection
+
 @section('script')
     window.addEventListener('closeModalDriver', event => {
         $('#InsertDataDriver').modal('hide');
