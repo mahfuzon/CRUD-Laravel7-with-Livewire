@@ -23,7 +23,6 @@ class CreateTransactionsTable extends Migration
             $table->integer('total_harga');
             $table->integer('bayar');
             $table->text('keterangan')->nullable();
-            $table->integer('hutang')->nullable();
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('driver_id')->unsigned();
             $table->timestamps();
