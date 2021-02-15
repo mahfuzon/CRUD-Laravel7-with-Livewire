@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Balance;
 use Livewire\Component;
 use App\Customer;
 use App\Driver;
@@ -91,20 +92,41 @@ class TransactionCreate extends Component
             ])->validate();
             Transaction::find($this->modelId)->update($datVal);
         } else {
-            $datVal =  Validator::make($data, [
-                'customer_id' => 'required|integer',
-                'date' => 'required|date',
-                'berat_ikan' => 'required|integer',
-                'jlh_kantong' => 'required|integer',
-                'harga_ikan' => 'required|integer',
-                'bayar' => 'required|integer',
-                'keterangan' => 'required|string',
-                'total_berat' => 'required|integer',
-                'total_harga' => 'required|integer',
-                'hutang' => 'integer',
-                'driver_id' => 'required|integer',
-            ])->validate();
-            Transaction::create($datVal);
+            // $datVal =  Validator::make($data, [
+            //     'customer_id' => 'required|integer',
+            //     'date' => 'required|date',
+            //     'berat_ikan' => 'required|integer',
+            //     'jlh_kantong' => 'required|integer',
+            //     'harga_ikan' => 'required|integer',
+            //     'bayar' => 'required|integer',
+            //     'keterangan' => 'required|string',
+            //     'total_berat' => 'required|integer',
+            //     'total_harga' => 'required|integer',
+            //     'hutang' => 'integer',
+            //     'driver_id' => 'required|integer',
+            // ])->validate();
+            // Transaction::create($datVal);
+            // ========================================================================================================
+            $transaction_customer = Customer::find($this->customer_id)->transaction;
+            if ($transaction_customer->count() == 0) {
+                $model_transaction = Transaction::create([
+                    'customer_id' => $this->customer_id,
+                    'date' => $this->date,
+                    'berat_ikan' => $this->berat_ikan,
+                    'jlh_kantong' => $this->jlh_kantong,
+                    'harga_ikan' => $this->harga_ikan,
+                    'driver_id' => $this->driver_id,
+                    'bayar' => $this->bayar,
+                    'keterangan' => $this->keterangan,
+                    'total_berat' => $this->total_berat,
+                    'total_harga' => $this->total_harga,
+                ]);
+
+                $model_balance = Balance::create([
+                    'transaction_id' => $model_transaction->id,
+                    'hutang' => $model_transaction->total_harga - $model_transaction->bayar
+                ]);
+            }
         }
         $this->emit('refreshTable');
         $this->resetErrorBag();
