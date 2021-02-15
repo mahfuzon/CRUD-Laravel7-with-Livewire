@@ -23,6 +23,7 @@
     <!-- bootsrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @livewireStyles
 </head>
 
@@ -208,8 +209,17 @@
         crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @livewireScripts
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
         @yield('script')
+
+    window.addEventListener('success', event => { 
+        toastr.success('Success!!!');
+    });
+
+    window.addEventListener('deleted', event => { 
+        toastr.error('Deleted!!!');
+    });
     </script>
 </body>
 

@@ -90,7 +90,6 @@ class TransactionCreate extends Component
                 'driver_id' => 'required|integer',
             ])->validate();
             Transaction::find($this->modelId)->update($datVal);
-            $this->emit('session', 'update');
         } else {
             $datVal =  Validator::make($data, [
                 'customer_id' => 'required|integer',
@@ -106,13 +105,12 @@ class TransactionCreate extends Component
                 'driver_id' => 'required|integer',
             ])->validate();
             Transaction::create($datVal);
-
-            $this->emit('session', 'create');
         }
         $this->emit('refreshTable');
         $this->resetErrorBag();
         $this->dispatchBrowserEvent('closeModalTransaction');
         $this->clearForm();
+        $this->dispatchBrowserEvent('success');
     }
 
     public function render()

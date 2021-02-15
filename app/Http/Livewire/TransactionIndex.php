@@ -59,27 +59,16 @@ class transactionIndex extends Component
     public function delete()
     {
         $id_customer = Transaction::find($this->selectedItem)->customer_id;
-        $hutang_transaksi = Transaction::find($this->selectedItem)->total_harga;
+        $hutang_transaksi = Transaction::find($this->selectedItem)->bayar = 0 ? Transaction::find($this->selectedItem)->bayar : Transaction::find($this->selectedItem)->total_harga;
         $customer = Customer::find($id_customer);
         $customer->hutang -= $hutang_transaksi;
         $customer->save();
         Transaction::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalTransaction');
-        $this->session('delete');
+        $this->dispatchBrowserEvent('deleted');
     }
 
     public function refreshTable()
     {
-    }
-
-    public function session($string)
-    {
-        if ($string === 'update') {
-            session()->flash('message', 'transaction successfully updated.');
-        } else if ($string === 'create') {
-            session()->flash('message', 'transaction successfully created.');
-        } else {
-            session()->flash('message', 'transaction successfully deleted.');
-        }
     }
 }

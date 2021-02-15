@@ -11,7 +11,7 @@ class DriverIndex extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $action;
-    public $selectedItem, $message;
+    public $selectedItem;
     public $index = 5;
     public $keyword;
 
@@ -26,7 +26,7 @@ class DriverIndex extends Component
         }
     }
 
-    protected $listeners = ['refreshTable', 'session'];
+    protected $listeners = ['refreshTable'];
 
     public function render()
     {
@@ -47,21 +47,10 @@ class DriverIndex extends Component
     {
         Driver::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalDriver');
-        $this->session('delete');
+        $this->dispatchBrowserEvent('deleted');
     }
 
     public function refreshTable()
     {
-    }
-
-    public function session($string)
-    {
-        if ($string === 'update') {
-            session()->flash('message', 'driver successfully updated.');
-        } else if ($string === 'create') {
-            session()->flash('message', 'driver successfully created.');
-        } else {
-            session()->flash('message', 'driver successfully deleted.');
-        }
     }
 }

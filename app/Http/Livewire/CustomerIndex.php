@@ -17,8 +17,9 @@ class CustomerIndex extends Component
     public $message;
 
     protected $queryString = ['keyword'];
-    
-    public function mount(){
+
+    public function mount()
+    {
         $this->keyword = request()->query('keyword', $this->keyword);
     }
 
@@ -54,7 +55,7 @@ class CustomerIndex extends Component
     {
         Customer::destroy($this->selectedItem);
         $this->dispatchBrowserEvent('closeDeleteModalCustomer');
-        $this->session('delete');
+        $this->dispatchBrowserEvent('deleted');
     }
 
     public function refreshTable()
