@@ -106,7 +106,7 @@
           <td>{{$item->total_berat}} Kg</td>
           <td>@currency($item->total_harga)</td>
           <td>@currency($item->bayar)</td>
-          <td @if ($item->hutang <= 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>  
+          <td @if ($item->balance->hutang <= 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->balance->hutang))</td>  
           <td>{{$item->driver->name}}</td>
           <td>
             <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
