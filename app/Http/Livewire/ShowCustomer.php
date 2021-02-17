@@ -15,8 +15,9 @@ class ShowCustomer extends Component
 
     public function render()
     {
-        return view('livewire.show-customer', ['customer' => $this->from === null && $this->to === null ? Customer::findOrFail($this->customer_id)->transaction()->latest()->paginate($this->index):
-        Customer::findOrFail($this->customer_id)->transaction()->latest()->whereBetween('date', [$this->from, $this->to])->paginate($this->index)
+        return view('livewire.show-customer', [
+            'customer' => $this->from === null && $this->to === null ? Customer::findOrFail($this->customer_id)->transaction()->orderBy('date', 'ASC')->paginate($this->index) :
+                Customer::findOrFail($this->customer_id)->transaction()->latest()->whereBetween('date', [$this->from, $this->to])->paginate($this->index)
         ]);
     }
 }

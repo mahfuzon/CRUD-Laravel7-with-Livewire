@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Balance;
 use Livewire\Component;
 use App\Customer;
 use App\Driver;
@@ -50,13 +49,6 @@ class TransactionCreate extends Component
 
     public function post()
     {
-        $transaction_customer = Customer::find($this->customer_id)->transaction;
-        $data2 = [
-            'customer_id' => $this->customer_id,
-        ];
-        Validator::make($data2, [
-            'customer_id' => 'required|integer',
-        ])->validate();
         $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
         $this->total_harga = $this->total_berat * $this->harga_ikan;
         $this->hutang = $this->total_harga - $this->bayar;
@@ -67,13 +59,57 @@ class TransactionCreate extends Component
             'jlh_kantong' => $this->jlh_kantong,
             'harga_ikan' => $this->harga_ikan,
             'driver_id' => $this->driver_id,
+            'hutang' => $this->hutang,
             'bayar' => $this->bayar,
             'keterangan' => $this->keterangan,
             'total_berat' => $this->total_berat,
             'total_harga' => $this->total_harga,
         ];
 
+        $datVal =  Validator::make($data, [
+            'customer_id' => 'required|integer',
+            'date' => 'required|date',
+            'berat_ikan' => 'required|integer',
+            'jlh_kantong' => 'required|integer',
+            'harga_ikan' => 'required|integer',
+            'bayar' => 'required|integer',
+            'hutang' => 'required|integer',
+            'keterangan' => 'required|string',
+            'total_berat' => 'required|integer',
+            'total_harga' => 'required|integer',
+            'driver_id' => 'required|integer',
+        ])->validate();
+
         if ($this->modelId) {
+            $transaction_customer = Customer::find($this->customer_id)->transaction;
+            $transaction_before = $transaction_customer->where('id', '<', $this->modelId);
+
+            if ($transaction_before->count() == 0) {
+                $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
+                $this->total_harga = $this->total_berat * $this->harga_ikan;
+                $this->hutang = $this->total_harga - $this->bayar;
+            } else {
+                $transaction_before_last = $transaction_before[count($transaction_before) - 1];
+                $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
+                $this->total_harga = $this->total_berat * $this->harga_ikan;
+                $this->hutang = $transaction_before_last->hutang + $this->total_harga - $this->bayar;
+            }
+
+
+            $data = [
+                'customer_id' => $this->customer_id,
+                'date' => $this->date,
+                'berat_ikan' => $this->berat_ikan,
+                'jlh_kantong' => $this->jlh_kantong,
+                'harga_ikan' => $this->harga_ikan,
+                'driver_id' => $this->driver_id,
+                'hutang' => $this->hutang,
+                'bayar' => $this->bayar,
+                'keterangan' => $this->keterangan,
+                'total_berat' => $this->total_berat,
+                'total_harga' => $this->total_harga,
+            ];
+
             $datVal =  Validator::make($data, [
                 'customer_id' => 'required|integer',
                 'date' => 'required|date',
@@ -81,6 +117,7 @@ class TransactionCreate extends Component
                 'jlh_kantong' => 'required|integer',
                 'harga_ikan' => 'required|integer',
                 'bayar' => 'required|integer',
+                'hutang' => 'required|integer',
                 'keterangan' => 'required|string',
                 'total_berat' => 'required|integer',
                 'total_harga' => 'required|integer',
@@ -88,71 +125,63 @@ class TransactionCreate extends Component
             ])->validate();
             $model_transaction = Transaction::find($this->modelId);
             $model_transaction->update($datVal);
-            // dd($model_transaction->id);30
-            $transaction_by_id = $transaction_customer->where('id', '<', $model_transaction->id);
-            // dd($transaction_by_id); array 4 buah
-            if ($transaction_by_id->count() > 0) {
-                $transaction_before = $transaction_by_id[count($transaction_by_id) - 1];
-                // dd($transaction_before);  1 objek sebelum model update 
-                $balance_before = Balance::where('transaction_id', $transaction_before->id)->first();
-                $model_balance = Balance::where('transaction_id', $model_transaction->id)->first();
-                $model_balance->hutang = $balance_before->hutang + $model_transaction->total_harga - $model_transaction->bayar;
-                $model_balance->save();
-            } else {
-                $model_balance = Balance::where('transaction_id', $model_transaction->id)->first();
-                $model_balance->hutang = $model_transaction->total_harga - $model_transaction->bayar;
-                $model_balance->save();
+            $transaction_after = $transaction_customer->where('id', '>', $this->modelId);
+            $hutang_sebelum = $model_transaction->hutang;
+            foreach ($transaction_after as $item) {
+                $item->hutang = $hutang_sebelum + $item->total_harga - $item->bayar;
+                $item->save();
+                $hutang_sebelum = $item->hutang;
             }
-            // 1, ambil data transaksi > $model_transaction
-            $transaction_after = $transaction_customer->where('id', '>', $model_transaction->id);
-            // dd($transaction_after);
-            // 2. ambil data balance > $model_balance
-            $balance_after = Balance::where('id', '>', $model_balance->id)->get();
-            dd($transaction_after);
-            // 3. masukkan ke perulangan sebanyak jumlah row yang ditemukan
-            $balance_sebelum = $model_balance;
+            // $transaction_after->hutang = $model_transaction->hutang + $transaction_after->total_harga - $transaction_after->bayar;
+            // $transaction_after->save();
+            // $hutang_sebelum = $model_transaction->hutang;
 
-            foreach ($balance_after as $item) {
-                $transaction = $transaction_after->where('id', $item->transaction_id)->first();
-                $harga_total = $transaction->total_harga;
-                $bayar_total = $transaction->bayar;
-
-                $balance_baru = $item;
-                $balance_baru->hutang = $balance_sebelum->hutang + $harga_total - $transaction->bayar;
-                $balance_baru->save();
-
-                $balance_sebelum = $balance_baru;
-            }
+            // dd($hutang_sebelum);
+            // foreach ($transaction_after as $item) {
+            //     $model_transaction_baru = $item;
+            //     // dd($model_transaction_baru);
+            //     $model_transaction->hutang = $hutang_sebelum + $model_transaction_baru->total_harga - $model_transaction_baru->bayar;
+            //     $model_transaction_baru->save();
+            //     $hutang_sebelum = $model_transaction_baru->hutang;
+            // }
         } else {
-            $datVal =  Validator::make($data, [
-                'customer_id' => 'required|integer',
-                'date' => 'required|date',
-                'berat_ikan' => 'required|integer',
-                'jlh_kantong' => 'required|integer',
-                'harga_ikan' => 'required|integer',
-                'bayar' => 'required|integer',
-                'keterangan' => 'required|string',
-                'total_berat' => 'required|integer',
-                'total_harga' => 'required|integer',
-                'driver_id' => 'required|integer',
-            ])->validate();
-            // ========================================================================================================
+            $transaction_customer = Customer::find($this->customer_id)->transaction;
             if ($transaction_customer->count() == 0) {
                 $model_transaction = Transaction::create($datVal);
-
-                $model_balance = Balance::create([
-                    'transaction_id' => $model_transaction->id,
-                    'hutang' => $model_transaction->total_harga - $model_transaction->bayar
-                ]);
             } else {
+                $transaction_last = $transaction_customer[count($transaction_customer) - 1];
+                $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
+                $this->total_harga = $this->total_berat * $this->harga_ikan;
+                $this->hutang = $transaction_last->hutang + $this->total_harga - $this->bayar;
+                $data = [
+                    'customer_id' => $this->customer_id,
+                    'date' => $this->date,
+                    'berat_ikan' => $this->berat_ikan,
+                    'jlh_kantong' => $this->jlh_kantong,
+                    'harga_ikan' => $this->harga_ikan,
+                    'driver_id' => $this->driver_id,
+                    'hutang' => $this->hutang,
+                    'bayar' => $this->bayar,
+                    'keterangan' => $this->keterangan,
+                    'total_berat' => $this->total_berat,
+                    'total_harga' => $this->total_harga,
+                ];
+
+                $datVal =  Validator::make($data, [
+                    'customer_id' => 'required|integer',
+                    'date' => 'required|date',
+                    'berat_ikan' => 'required|integer',
+                    'jlh_kantong' => 'required|integer',
+                    'harga_ikan' => 'required|integer',
+                    'bayar' => 'required|integer',
+                    'hutang' => 'required|integer',
+                    'keterangan' => 'required|string',
+                    'total_berat' => 'required|integer',
+                    'total_harga' => 'required|integer',
+                    'driver_id' => 'required|integer',
+                ])->validate();
+
                 $model_transaction = Transaction::create($datVal);
-                $transaction_by_id = $transaction_customer->where('id', '<', $model_transaction->id);
-                $transaction_before = $transaction_by_id[count($transaction_customer) - 1];
-                $balance_before = Balance::where('transaction_id', $transaction_before->id)->first();
-                $model_balance = Balance::create([
-                    'transaction_id' => $model_transaction->id,
-                    'hutang' => $balance_before->hutang + $model_transaction->total_harga - $model_transaction->bayar
-                ]);
             }
         }
         $this->emit('refreshTable');
