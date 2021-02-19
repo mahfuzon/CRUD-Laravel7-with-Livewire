@@ -44,7 +44,7 @@ class transactionIndex extends Component
     {
 
         return view('livewire.transaction-index', [
-            'transaction' =>  $this->from === null && $this->to === null ? Transaction::orderBy('created_at', 'DESC')->paginate($this->index) :
+            'transaction' =>  $this->from === null && $this->to === null ? Transaction::orderBy('date', 'DESC')->paginate($this->index) :
                 Transaction::latest()->whereBetween('date', [$this->from, $this->to])
                 ->paginate($this->index)
         ]);
