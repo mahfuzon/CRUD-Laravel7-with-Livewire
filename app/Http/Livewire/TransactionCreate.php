@@ -135,8 +135,11 @@ class TransactionCreate extends Component
         } else {
             $transaction_customer = Customer::find($this->customer_id)->transaction()->get();
             $transaction_sortBy_date = $transaction_customer->sortBy('date');
-            $transaction_customer_where_clause_before = $transaction_sortBy_date->where('date', '<', $this->date);
-            $transaction_customer_where_clause_after = $transaction_sortBy_date->where('date', '>', $this->date);
+            $array = $transaction_sortBy_date->toArray();
+            $array_reset = array_values($array);
+            $collection = collect($array_reset);
+            $transaction_customer_where_clause_before = $collection->where('date', '<', $this->date);
+            $transaction_customer_where_clause_after = $collection->where('date', '>', $this->date);
             if ($transaction_customer->count() == 0) {
                 $model_transaction = Transaction::create($datVal);
             } else if (!$transaction_customer_where_clause_before->count()) {
@@ -181,11 +184,10 @@ class TransactionCreate extends Component
                     $hutang_sebelum = $item->hutang;
                 }
             } else if (!$transaction_customer_where_clause_after->count()) {
-                $last = $transaction_customer_where_clause_before[0];
-                dd($transaction_sortBy_date->sortKeys());
+                $last = $transaction_customer_where_clause_before[$transaction_customer_where_clause_before->count() - 1];
                 $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
                 $this->total_harga = $this->total_berat * $this->harga_ikan;
-                $this->hutang = $last->hutang + $this->total_harga - $this->bayar;
+                $this->hutang = $last['hutang'] + $this->total_harga - $this->bayar;
                 $data = [
                     'customer_id' => $this->customer_id,
                     'date' => $this->date,
@@ -215,6 +217,48 @@ class TransactionCreate extends Component
                 ])->validate();
 
                 $model_transaction = Transaction::create($datVal);
+            } else {
+                $last = $transaction_customer_where_clause_before[$transaction_customer_where_clause_before->count() - 1];
+                $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
+                $this->total_harga = $this->total_berat * $this->harga_ikan;
+                $this->hutang = $last['hutang'] + $this->total_harga - $this->bayar;
+                $data = [
+                    'customer_id' => $this->customer_id,
+                    'date' => $this->date,
+                    'berat_ikan' => $this->berat_ikan,
+                    'jlh_kantong' => $this->jlh_kantong,
+                    'harga_ikan' => $this->harga_ikan,
+                    'driver_id' => $this->driver_id,
+                    'hutang' => $this->hutang,
+                    'bayar' => $this->bayar,
+                    'keterangan' => $this->keterangan,
+                    'total_berat' => $this->total_berat,
+                    'total_harga' => $this->total_harga,
+                ];
+
+                $datVal =  Validator::make($data, [
+                    'customer_id' => 'required|integer',
+                    'date' => 'required|date',
+                    'berat_ikan' => 'required|integer',
+                    'jlh_kantong' => 'required|integer',
+                    'harga_ikan' => 'required|integer',
+                    'bayar' => 'required|integer',
+                    'hutang' => 'required|integer',
+                    'keterangan' => 'required|string',
+                    'total_berat' => 'required|integer',
+                    'total_harga' => 'required|integer',
+                    'driver_id' => 'required|integer',
+                ])->validate();
+
+                $model_transaction = Transaction::create($datVal);
+
+                $transaction_customer_where_clause_after = $transaction_sortBy_date->where('date', '>', $model_transaction->date);
+                $hutang_sebelum = $model_transaction->hutang;
+                foreach ($transaction_customer_where_clause_after as $item) {
+                    $item->hutang = $hutang_sebelum + $item->total_harga - $item->bayar;
+                    $item->save();
+                    $hutang_sebelum = $item->hutang;
+                }
             }
         }
         $this->emit('refreshTable');
