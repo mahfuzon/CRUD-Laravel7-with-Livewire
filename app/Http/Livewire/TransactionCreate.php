@@ -81,18 +81,29 @@ class TransactionCreate extends Component
         ])->validate();
 
         if ($this->modelId) {
-            $transaction_customer = Customer::find($this->customer_id)->transaction;
-            $transaction_before = $transaction_customer->where('id', '<', $this->modelId);
+            $transaction_customer = Customer::find($this->customer_id)->transaction()->get();
+            $transaction_sortBy_date = $transaction_customer->sortBy('date');
+            $array = $transaction_sortBy_date->toArray();
+            $transaction_before = $transaction_customer->where('date', '<', $this->modelId);
+            $transaction_after = $transaction_customer->where('date', '>', $this->modelId);
+            $array_reset = array_values($array);
+            $collection = collect($array_reset);
+            $transaction_customer_where_clause_before = $collection->where('date', '<', $this->date);
+            $transaction_customer_where_clause_after = $collection->where('date', '>', $this->date);
 
-            if ($transaction_before->count() == 0) {
+            if (!$transaction_customer->count()) {
+                $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
+                $this->total_harga = $this->total_berat * $this->harga_ikan;
+                $this->hutang = $this->total_harga - $this->bayar;
+            } else if (!$transaction_customer_where_clause_before->count()) {
                 $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
                 $this->total_harga = $this->total_berat * $this->harga_ikan;
                 $this->hutang = $this->total_harga - $this->bayar;
             } else {
-                $transaction_before_last = $transaction_before[count($transaction_before) - 1];
+                $last = $transaction_customer_where_clause_before[$transaction_customer_where_clause_before->count() - 1];
                 $this->total_berat = $this->jlh_kantong * $this->berat_ikan;
                 $this->total_harga = $this->total_berat * $this->harga_ikan;
-                $this->hutang = $transaction_before_last->hutang + $this->total_harga - $this->bayar;
+                $this->hutang = $last['hutang'] + $this->total_harga - $this->bayar;
             }
 
 
@@ -125,12 +136,15 @@ class TransactionCreate extends Component
             ])->validate();
             $model_transaction = Transaction::find($this->modelId);
             $model_transaction->update($datVal);
-            $transaction_after = $transaction_customer->where('id', '>', $this->modelId);
-            $hutang_sebelum = $model_transaction->hutang;
-            foreach ($transaction_after as $item) {
-                $item->hutang = $hutang_sebelum + $item->total_harga - $item->bayar;
-                $item->save();
-                $hutang_sebelum = $item->hutang;
+
+            $model_transaction_after = $transaction_sortBy_date->where('date', '>', $model_transaction->date);
+            if ($model_transaction_after->count() > 0) {
+                $hutang_sebelum = $model_transaction->hutang;
+                foreach ($model_transaction_after as $item) {
+                    $item->hutang = $hutang_sebelum + $item->total_harga - $item->bayar;
+                    $item->save();
+                    $hutang_sebelum = $item->hutang;
+                }
             }
         } else {
             $transaction_customer = Customer::find($this->customer_id)->transaction()->get();
