@@ -18,6 +18,7 @@ class transactionIndex extends Component
     public $message;
     public $from;
     public $to;
+    public $customer_id;
 
     protected $queryString = ['from', 'to'];
 
@@ -58,12 +59,38 @@ class transactionIndex extends Component
 
     public function delete()
     {
-        $id_customer = Transaction::find($this->selectedItem)->customer_id;
-        $hutang_transaksi = Transaction::find($this->selectedItem)->bayar = 0 ? Transaction::find($this->selectedItem)->bayar : Transaction::find($this->selectedItem)->total_harga;
-        $customer = Customer::find($id_customer);
-        $customer->hutang -= $hutang_transaksi;
-        $customer->save();
-        Transaction::destroy($this->selectedItem);
+        $transaction = Transaction::find($this->selectedItem);
+        $transaction_customer = Customer::find($transaction->customer_id)->transaction()->get();
+        $sort = $transaction_customer->sortBy('date');
+        $transaction_customer_sort = collect(array_values($transaction_customer->sortBy('date')->toArray()));
+        $transaction_where_clause_before = $transaction_customer_sort->where('date', '<', $transaction->date);
+        // dd($transaction_where_clause_before);
+        $after = $sort->where('date', '>', $transaction->date);
+        $before = $sort->where('date', '<', $transaction->date);
+        $transaction_where_clause_after = $transaction_customer_sort->where('date', '>', $transaction->date);
+        if (!$transaction_where_clause_before->count()) {
+            $transaction->delete();
+            foreach ($after as $item) {
+                $item->hutang -= $transaction->hutang;
+                $item->save();
+            }
+        } else if ($after->count() == 0) {
+            $transaction->delete();
+        } else {
+            $transaction->delete();
+            $last_array = array_values($transaction_where_clause_before->toArray());
+            $last_hutang = $last_array[count($last_array) - 1]['hutang'];
+            $first_array = array_values($transaction_where_clause_after->toArray());
+            $first_hutang = $first_array[1];
+            $collection_first = collect($first_hutang);
+            $hutang_sebelum = $last_array[count($last_array) - 1]['hutang'];
+            foreach ($after as $item) {
+                $item->hutang = $hutang_sebelum + $item->total_harga - $item->bayar;
+                $item->save();
+                $hutang_sebelum = $item->hutang;
+            }
+        }
+
         $this->dispatchBrowserEvent('closeDeleteModalTransaction');
         $this->dispatchBrowserEvent('deleted');
     }
