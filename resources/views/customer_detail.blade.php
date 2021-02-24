@@ -25,5 +25,11 @@ window.addEventListener('closeModalTransactionCustomer', event => {
     $('#EditDataTransactionCustomer').modal('hide');
 });
 
-closeModalTransactionCustomer
+window.addEventListener('openDeleteModalTransactionCustomer', event => {
+    $('#DeleteDataTransactionCustomer').modal('show');
+});
+
+window.addEventListener('closeDeleteModalTransactionCustomer', event => {
+    $('#DeleteDataTransactionCustomer').modal('hide');
+});
 @endsection

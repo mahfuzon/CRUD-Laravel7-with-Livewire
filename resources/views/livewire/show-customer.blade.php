@@ -1,14 +1,17 @@
 <div>
   <div class="row">
     <div class="col-sm-6">
+      {{-- INDEX --}}
       <select wire:model="index" class="custom-select col-3 mt-5">
         <option>20</option>
         <option>30</option>
         <option>50</option>
       </select>
+      {{-- AKHIR INDEX --}}
     </div>
     <div class="col-sm-6">
       <div class="row">
+        {{-- FORM PENCARIAN TANGGAL DAN EXPORT --}}
         <form action="{{route('export_pdf')}}" method="post" id="export_pdf">
           @csrf
           <input type="hidden" name="id" value="{{$customer_id}}">
@@ -36,10 +39,12 @@
             </span>
           </div>
         </form>
+        {{-- AKHIR FORM PENCARIAN TANGGAL DAN EXPORT --}}
       </div>
     </div>
   </div>
 
+  {{-- TABLE --}}
   <table class="table table-striped">
     <thead>
       <tr>
@@ -90,6 +95,7 @@
   {{ $customer->links() }}
 
 
+  {{-- MODAL DETAIL --}}
   <div class="modal fade" id="detailModalShow" tabindex="-1" aria-labelledby="detailModalShowLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -107,6 +113,7 @@
       </div>
     </div>
   </div>
+  {{-- MODAL DETAIL END --}}
 
 {{-- MODAL FORM EDIT --}}
   <div class="modal fade" id="EditDataTransactionCustomer" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -125,5 +132,26 @@
     </div>
   </div>
 {{--AKHIR MODAL FORM EDIT--}}
+
+ <!-- Modal DELETE DATA -->
+ <div class="modal fade" id="DeleteDataTransactionCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+ aria-labelledby="DeleteDataTransactionCustomerLabel" aria-hidden="true">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="DeleteDataTransactionCustomerLabel">Delete Data</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <h4>Do you wish to continue?</h4>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+       <button wire:click='delete' type="button" class="btn btn-primary">Yes</button>
+     </div>
+   </div>
+ </div>
+</div>
+{{-- END --}}
 
 </div>

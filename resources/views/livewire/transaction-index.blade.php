@@ -17,7 +17,7 @@
   </div>
   <br>
 
-  <!-- Modal -->
+  <!-- Modal DELETE DATA -->
   <div class="modal fade" id="DeleteDataTransaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="DeleteDataTransactionLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -36,6 +36,7 @@
       </div>
     </div>
   </div>
+  {{-- END --}}
 
 
   <div class="row">
