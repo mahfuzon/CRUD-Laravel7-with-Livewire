@@ -2,7 +2,7 @@
     <form wire:submit.prevent="post">
         <div class="row">
             <div class="col mb-3">
-                <select name="customer_id" id="customer_id" wire:model='customer_id' class="form-control @error('customer_id') is-invalid @enderror">
+                <select name="customer_id" id="customer_id" wire:model='customer_id' class="form-control @error('customer_id') is-invalid @enderror" disabled>
                     <option value="">== Select Customer ==</option>
                     @foreach ($customer as $item)
                         <option value="{{$item->id}}">{{$item->name}}</option>

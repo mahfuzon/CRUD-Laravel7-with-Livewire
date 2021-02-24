@@ -13,7 +13,7 @@ class transactionIndex extends Component
     protected $paginationTheme = 'bootstrap';
     public $action;
     public $selectedItem;
-    public $index = 5;
+    public $index = 20;
     public $keyword;
     public $message;
     public $from;
@@ -97,5 +97,11 @@ class transactionIndex extends Component
 
     public function refreshTable()
     {
+    }
+
+    public function resetInput()
+    {
+        $this->from = null;
+        $this->to = null;
     }
 }

@@ -8,6 +8,10 @@
     @livewire('customer-index')
 @endsection
 
+@section('judul')
+    Customer
+@endsection
+
 @section('script')
     window.addEventListener('closeModalCustomer', event => {
         $('#InsertDataCustomer').modal('hide');

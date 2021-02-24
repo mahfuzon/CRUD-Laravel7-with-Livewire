@@ -11,7 +11,8 @@ class ShowCustomer extends Component
     protected $paginationTheme = 'bootstrap';
     use WithPagination;
     public $customer_id, $to, $from;
-    public $index = 5;
+    public $index = 20;
+    public $selectedItem;
 
     public function render()
     {
@@ -20,4 +21,29 @@ class ShowCustomer extends Component
                 Customer::findOrFail($this->customer_id)->transaction()->latest()->whereBetween('date', [$this->from, $this->to])->paginate($this->index)
         ]);
     }
+
+    public function resetInput()
+    {
+        $this->from = null;
+        $this->to = null;
+    }
+
+    public function selectItem($itemId, $action)
+    {
+        $this->selectedItem = $itemId;
+        if ($action == 'delete') {
+            $this->dispatchBrowserEvent('openDeleteModalTransaction');
+        } else {
+            $this->emit('getModelId', $this->selectedItem);
+            $this->dispatchBrowserEvent('openEditModalTransactionCustomer');
+        }
+    }
+
+    public function refreshTable()
+    {
+    }
+
+    protected $listeners = [
+        'refreshTable'
+    ];
 }

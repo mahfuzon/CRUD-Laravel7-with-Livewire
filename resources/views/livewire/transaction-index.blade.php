@@ -1,7 +1,4 @@
 <div>
-  <!-- Button trigger modal -->
-  <i class="far fa-plus-square btn btn-primary" data-bs-toggle="modal" data-bs-target="#InsertDataTransaction"> Insert Data</i>
-
   <!-- Modal -->
   <div class="modal fade" id="InsertDataTransaction" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="InsertDataTransactionLabel" aria-hidden="true">
@@ -40,45 +37,54 @@
     </div>
   </div>
 
-  <span>
-    <div class="py-3">
-      <select wire:model="index" class="custom-select col-1">
-        <option>5</option>
-        <option>10</option>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <!-- Button trigger modal -->
+      <i class="far fa-plus-square btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#InsertDataTransaction">
+        Insert Data</i>
+      <select wire:model="index" class="custom-select col-3 mt-5 ml-5">
         <option>20</option>
+        <option>30</option>
+        <option>50</option>
       </select>
     </div>
-  </span>
-
-  <form action="{{route('export')}}" method="post" id="export_all">
-    @csrf
-    <div class="row g-5 align-items-center">
-      <div class="col-auto">
-        <label for="from" class="col-form-label">From:</label>
-      </div>
-      <div class="col-auto">
-        <input type="date" id="from" class="form-control" wire:model='from' name="from">
-      </div>
-      <div class="col-auto">
-        <label for="to" class="col-form-label">To:</label>
-      </div>
-      <div class="col-auto">
-        <input type="date" id="to" class="form-control" wire:model='to' name="to">
-      </div>
-      <div class="col-auto">
-        <a class="btn btn-success" href="{{ route('export') }}"
-        onclick="event.preventDefault();
-                      document.getElementById('export_all').submit();">
-          <i class="fas fa-file-download mr-2"></i> Generate Report
-        </a>
+    <div class="col-sm-6">
+      <div class="row">
+        <form action="{{route('export')}}" method="post" id="export_all">
+          @csrf
+          <div class="row mb-3">
+            <label for="from" class="col-sm-2 col-form-label">From</label>
+            <div class="col-sm-10">
+              <input type="date" id="from" class="form-control" wire:model='from' name="from">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="to" class="col-sm-2 col-form-label">To</label>
+            <div class="col-sm-10">
+              <input type="date" id="to" class="form-control" wire:model='to' name="to">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <span>
+              <a style="float:right" class="btn btn-success btn-md" href="{{ route('export') }}" onclick="event.preventDefault();
+            document.getElementById('export_all').submit();">
+                <i class="fas fa-file-download"></i> PDF
+              </a>
+              <a style="float:right" class="btn btn-secondary btn-md mr-2" wire:click="resetInput">
+                <i class="fas fa-sync"></i> Reset
+              </a>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
-  </form>
+  </div>
 
 
   @if (session()->has('message'))
   <div class="alert alert-success">
-      {{ session('message') }}
+    {{ session('message') }}
   </div>
   @endif
 
@@ -91,8 +97,9 @@
         <th>Berat Total</th>
         <th>Total Harga</th>
         <th>Bayar</th>
-        <th>Hutang</th>
+        <th>Saldo</th>
         <th>Driver</th>
+        <th>Action</th>
       </thead>
       @if($transaction->count())
       <tbody>
@@ -106,12 +113,14 @@
           <td>{{$item->total_berat}} Kg</td>
           <td>@currency($item->total_harga)</td>
           <td>@currency($item->bayar)</td>
-          <td @if ($item->hutang <= 0) style="color:green"@else style="color: red"  @endif>@currency(abs($item->hutang))</td>  
+          <td @if ($item->hutang <= 0) style="color:green" @else style="color: red" @endif>@currency(abs($item->hutang))
+          </td>
           <td>{{$item->driver->name}}</td>
           <td>
             <i class="far fa-edit btn btn-success" wire:click="selectItem({{$item->id}}, 'edit')"></i>
-            <i class="fas fa-trash-alt btn btn-danger"  wire:click="selectItem({{$item->id}}, 'delete')"></i>
-            <a wire:click="$emit('openModalDetail', {{$item->id}})" href="#" class="btn btn-warning"><i class="fas fa-info-circle"></i></a>
+            <i class="fas fa-trash-alt btn btn-danger" wire:click="selectItem({{$item->id}}, 'delete')"></i>
+            <a wire:click="$emit('openModalDetail', {{$item->id}})" href="#" class="btn btn-warning"><i
+                class="fas fa-info-circle"></i></a>
           </td>
         </tr>
         @endforeach
@@ -120,7 +129,9 @@
       <tbody>
         <tr>
           <td colspan="10">
-            <h3><center>Data Not Found</center></h3>
+            <h3>
+              <center>Data Not Found</center>
+            </h3>
           </td>
         </tr>
       </tbody>

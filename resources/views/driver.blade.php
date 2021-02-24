@@ -8,6 +8,10 @@
     <title>Driver</title>
 @endsection
 
+@section('judul')
+    Driver
+@endsection
+
 @section('script')
     window.addEventListener('closeModalDriver', event => {
         $('#InsertDataDriver').modal('hide');

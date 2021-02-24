@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use App\Transaction;
-use Psy\Readline\Transient;
 use PDF;
 
 class HomeController extends Controller
@@ -55,8 +54,9 @@ class HomeController extends Controller
 
     public function show($id)
     {
+        $customer_name = Customer::find($id)->name;
         $halaman = 'transaction';
-        return view('customer_detail', compact('id', 'halaman'));
+        return view('customer_detail', compact('id', 'halaman', 'customer_name'));
     }
 
     public function export_pdf(Request $request)
