@@ -24,11 +24,11 @@ class CreateTransactionsTable extends Migration
             $table->integer('bayar');
             $table->integer('hutang')->nullable();
             $table->text('keterangan')->nullable();
-            $table->bigInteger('customer_id')->unsigned();
-            $table->bigInteger('driver_id')->unsigned();
+            $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->bigInteger('driver_id')->unsigned()->nullable();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('SET NULL');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('SET NULL');
             $table->timestamps();
         });
     }

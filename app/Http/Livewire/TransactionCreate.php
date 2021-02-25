@@ -147,6 +147,7 @@ class TransactionCreate extends Component
                 }
             }
         } else {
+            $haha = Customer::find($this->customer_id)->transaction();
             $transaction_customer = Customer::find($this->customer_id)->transaction()->get();
             $transaction_sortBy_date = $transaction_customer->sortBy('date');
             $array = $transaction_sortBy_date->toArray();
@@ -154,6 +155,11 @@ class TransactionCreate extends Component
             $collection = collect($array_reset);
             $transaction_customer_where_clause_before = $collection->where('date', '<', $this->date);
             $transaction_customer_where_clause_after = $collection->where('date', '>', $this->date);
+            $hari_sama = $haha->whereDate('date', $this->date)->get();
+            // dd($hari_sama);
+            // if ($hari_sama->count() > 0) {
+            //     return session()->flash('hari_sama', 'tanggal yang diinputkan sudah ada, inputkan tanggal lain atau silahkan edit');
+            // }
             if ($transaction_customer->count() == 0) {
                 $model_transaction = Transaction::create($datVal);
             } else if (!$transaction_customer_where_clause_before->count()) {
