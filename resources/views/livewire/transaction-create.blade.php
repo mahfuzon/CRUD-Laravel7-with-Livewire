@@ -31,7 +31,7 @@
         </div>
         <div class="mb-3">
             <label for="date">Transaction date:</label>
-            <input type="date" class="form-control @error('date') is-invalid @enderror" id="date" wire:model="date">
+            <input type="datetime-local" class="form-control @error('date') is-invalid @enderror" id="date" wire:model="date">
             @error('date') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="row">

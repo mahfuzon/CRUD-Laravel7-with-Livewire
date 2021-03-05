@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Customer;
+use App\Transaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +26,11 @@ Route::get('/driver', 'HomeController@driver')->name('driver');
 Route::get('/customer', 'HomeController@customer')->name('customer');
 Route::post('/export', 'HomeController@export')->name('export');
 Route::post('/export_pdf', 'HomeController@export_pdf')->name('export_pdf');
-Route::get('/customer/{id}', 'HomeController@show');;
+Route::get('/customer/{id}', 'HomeController@show');
+
+Route::get('coba', function () {
+    $haha = Customer::find(1)->transaction()->orderBy('date')->get();
+    $transaction_terakhir = $haha[$haha->count() - 1];
+    $ab = $haha->where('date', '>', date('Y-m-d'));
+    dd($ab);
+});
