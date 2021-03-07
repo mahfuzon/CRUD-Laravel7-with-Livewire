@@ -109,7 +109,7 @@
         <?php $no++ ?>
         <tr>
           <td>{{$no}}</td>
-          <td>{{$item->date->format('d-M-y')}}</td>
+          <td>{{$item->date->format('d-F-y')}}</td>
           <td>@if($item->customer)<a href="/customer/{{ucwords($item->customer->id)}}">{{$item->customer->name}}</a>@else <span style="font-style: italic">Null</span> @endif</td>
           <td>{{$item->total_berat}} Kg</td>
           <td>@currency($item->total_harga)</td>

@@ -52,7 +52,6 @@
     {{ session('message') }}
 </div>
 @endif
-  @if($customer->count())
   <div>
     <table class="table table-striped">
       <thead>
@@ -62,6 +61,7 @@
         <th>Address</th>
         <th>Action</th>
       </thead>
+      @if($customer->count())
       <tbody>
         <?php $no = 0 ?>
         @foreach ($customer as $item)
@@ -78,8 +78,18 @@
         </tr>
         @endforeach
       </tbody>
+      @else
+      <tbody>
+        <tr>
+          <td colspan="10">
+            <h3>
+              <center>Data Not Found</center>
+            </h3>
+          </td>
+        </tr>
+      </tbody>
+      @endif
     </table>
   </div>
   {{$customer->links()}}
-  @endif
 </div>

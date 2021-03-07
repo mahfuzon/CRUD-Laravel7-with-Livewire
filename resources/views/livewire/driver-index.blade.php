@@ -54,7 +54,6 @@
 </div>
 @endif
 
-  @if($driver->count())
   <div>
     <table class="table table-striped">
       <thead>
@@ -63,6 +62,7 @@
         <th>Phone</th>
         <th>Action</th>
       </thead>
+      @if($driver->count())
       <tbody>
         <?php $no = 0 ?>
         @foreach ($driver as $item)
@@ -78,8 +78,18 @@
         </tr>
         @endforeach
       </tbody>
+      @else
+      <tbody>
+        <tr>
+          <td colspan="10">
+            <h3>
+              <center>Data Not Found</center>
+            </h3>
+          </td>
+        </tr>
+      </tbody>
+      @endif
     </table>
   </div>
   {{$driver->links()}}
-  @endif
 </div>
